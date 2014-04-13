@@ -1,6 +1,6 @@
 package data;
 
-import java.util.Calendar;
+import java.util.Calender;
 
 public class Car {
 	private int			id;
@@ -16,7 +16,7 @@ public class Car {
 		this.direction = direction;
 		this.onOffRamp = onOff;
 		this.freeway = freeway;
-		Calendar time = Calendar.getInstance();
+		Calender time = Calendar.getInstance();
 		hour = time.get(Calendar.HOUR_OF_DAY);
 	}
 	

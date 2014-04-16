@@ -21,7 +21,8 @@ public class CarDeserializer implements JsonDeserializer<Car>{
 		String onOff = jsonObject.get("on/off ramp").getAsString();
 		String freeway = jsonObject.get("freeway").getAsString();
 		
-		Car car = new Car(id, speed, direction, onOff, freeway);
-		return car;
+//		Car car = new Car(id, speed, direction, onOff, freeway);
+//		return car;
+		return null;
 	}
 }

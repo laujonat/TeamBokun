@@ -1,18 +1,22 @@
 package data;
 
+import java.util.Calendar;
+
+
 public class Car {
 	private int			id;
 	private double		speed;
-	private String		direction;
-	private String		onOffRamp;
-	private String		freeway;
+	private Freeway		freeway;
+	private RoadSegment roadSegment;
+	private int 		hour;
 	
-	public Car(int id, double speed, String direction, String onOff, String freeway) {
+	public Car(int id, double speed, Freeway freeway, RoadSegment rs) {
 		this.id = id;
 		this.speed = speed;
-		this.direction = direction;
-		this.onOffRamp = onOff;
 		this.freeway = freeway;
+		this.roadSegment = rs;
+		Calendar time = Calendar.getInstance();
+		hour = time.get(Calendar.HOUR_OF_DAY);
 	}
 	
 	public int getId() { return id; }
@@ -21,14 +25,14 @@ public class Car {
 	public double getSpeed() { return speed; }
 	public void setSpeed(double speed) { this.speed = speed; }
 	
-	public String getDirection() { return direction; }
-	public void setDirection(String direction) { this.direction = direction; }
+	public int getFreeway() { return freeway.getName(); }
+	public void setFreeway(Freeway freeway) { this.freeway = freeway; }
 	
-	public String getOnOffRamp() { return onOffRamp; }
-	public void setOnOffRamp(String onOffRamp) { this.onOffRamp = onOffRamp; }
+	public RoadSegment getRoadSeg() { return roadSegment; }
+	public void setRoadSeg(RoadSegment rs) { roadSegment = rs; }
 	
-	public String getFreeway() { return freeway; }
-	public void setFreeway(String freeway) { this.freeway = freeway; }
+	public int getHour() { return hour; }
+	// no setter for time as each car is only accounted for at 1 instance of time
 	
 	@Override
 	public String toString() {
@@ -36,8 +40,9 @@ public class Car {
 		string += "ID: " + id + "\n";
 		string += "Speed: " + speed + "\n";
 		string += "Direction: " + direction + "\n";
-		string += "On/Off Ramp: " + onOffRamp + "\n";
-		string += "Freeway: " + freeway + "\n";
+//		string += "On/Off Ramp: " + onOffRamp + "\n";
+//		string += "Freeway: " + roadSegment.getFreewayName() + "\n";
+		string += "Hour: " + hour + "\n";
 		
 		return string;
 	}

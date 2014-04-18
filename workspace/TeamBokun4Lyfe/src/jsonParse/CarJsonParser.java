@@ -20,7 +20,7 @@ public class CarJsonParser {
 	
 	//	Pass in path of json file
 	public CarJsonParser(String jsonPath) {
-		//	Configure Gson
+		//		Configure Gson
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Car.class, new CarDeserializer());
 		Gson gson = gsonBuilder.create();

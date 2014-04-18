@@ -25,7 +25,7 @@ public class CarJsonParser {
 		gsonBuilder.registerTypeAdapter(Car.class, new CarDeserializer());
 		Gson gson = gsonBuilder.create();
 		
-		BufferedReader br = null;
+		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(jsonPath));
 			String jsonString = br.readLine();

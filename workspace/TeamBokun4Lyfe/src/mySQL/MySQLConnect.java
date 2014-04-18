@@ -140,9 +140,9 @@ public class MySQLConnect {
 		}
 	}
 	
-	//	Update integer records in a table
-	public void updateInTable(int ID, String[] headers, int[] values, String table) throws SQLException {
-		System.out.println("Updating table " + table + "...");
+//	Update String records in a table
+	public void updateTable(int ID, String[] headers, Object[] values, String table) throws SQLException {
+		System.out.println("\nUpdating table " + table + "...");
 		
 		//	Small error check
 		if(headers.length != values.length)
@@ -158,22 +158,46 @@ public class MySQLConnect {
 		query += " WHERE ID = ?";
 		
 		//	Build statement
-//		try {
-//			
-//		}
+		try {
+			prepStatement = connect.prepareStatement(query);
+			
+			//	Set the values
+			int i;
+			for(i = 1; i <= headers.length; i++) {
+				if(values[i-1] instanceof Integer)
+					prepStatement.setInt(i, (Integer)values[i-1]);
+				else if(values[i-1] instanceof Double)
+					prepStatement.setDouble(i, (Double)values[i-1]);
+				else
+					prepStatement.setString(i, (String)values[i-1]);
+				
+			}
+			
+			//	Set the ID
+			prepStatement.setInt(i, ID);
+			
+			if(prepStatement.executeUpdate() == 0)
+				System.out.println("Update in table " + table + " failed...");
+			else
+				System.out.println("Update in table " + table + " succesful!");
+		}
+		catch(SQLException e) { throw e; }
+		finally {
+			if(prepStatement != null)
+				prepStatement.close();
+		}
 	}
 	
 	public static void main(String[] args) {
 		try {
 			MySQLConnect connection = new MySQLConnect();
 			
-			connection.printRecordsFromTable("Cars");
+//			connection.printRecordsFromTable("Cars");
 //			connection.insertIntoTable(new String[] {"ID", "Direction", "Speed", "Freeway", "SegmentID", "Hour"},
 //									   new Object[] {4, "East", 88.0, "105E", 15, 22},
 //									   "Cars");
-//			connection.printRecordsFromTable("Cars");
 //			connection.deleteFromTable(4, "Cars");
-//			connection.printRecordsFromTable("Cars");
+//			connection.updateTable(3, new String[] {"SegmentID", "Direction"}, new Object[] {17, "North"}, "Cars");
 		}
 		catch(Exception e) {
 			System.err.println("Error: " + e.getMessage());

@@ -24,9 +24,8 @@ public class CarDeserializer implements JsonDeserializer<Car>{
 		String onOff = jsonObject.get("on/off ramp").getAsString();
 		String freeway = jsonObject.get("freeway").getAsString();
 		
-		ConstructFreeways build = new ConstructFreeways();
-		Freeway fwy = build.getFreeway(freeway, direction);
-		RoadSegment rs = build.getRoadSegment(freeway, direction, onOff);
+		Freeway fwy = BokunCentral.freeways.getFreeway(freeway, direction);
+		RoadSegment rs = BokunCentral.freeways.getRoadSegment(freeway, direction, onOff);
 		
 		// check if car exists already exists
 		Car car = new Car(id, speed, fwy, rs);

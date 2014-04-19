@@ -25,7 +25,9 @@ public class CarJsonParser {
 		gsonBuilder.registerTypeAdapter(Car.class, new CarDeserializer());
 		Gson gson = gsonBuilder.create();
 		
-		try(BufferedReader br = new BufferedReader(new FileReader(jsonPath))) {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(jsonPath));
 			String jsonString = br.readLine();
 			if(jsonString == null) {
 				System.err.println("Invalid JSON file.");
@@ -51,6 +53,12 @@ public class CarJsonParser {
 		catch(IOException e) {
 			System.err.println("Error parsing JSON file: " + e.getMessage());
 			System.exit(1);
+		}
+		finally {
+			try {
+				br.close();
+			}
+			catch(IOException e) {System.err.println("Unknown error: "  + e.getMessage()); }
 		}
 	}
 	

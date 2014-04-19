@@ -5,20 +5,30 @@ public class RoadSegment
 
 	private int ID;
 	private String key;
-	private int[] startRampCoordinates;
-	private int[] endRampCoordinates;
+	private double[] startRampCoordinates;
+	private double[] endRampCoordinates;
 	private double minSpeed;
 	private Freeway freeway;
 	
-	public RoadSegment(String key)
+	public RoadSegment(String key, int ID, Freeway freeway)
 	{
-		
 		setKey(key);
+		this.ID = ID;
+		this.freeway = freeway;
 		
-		startRampCoordinates = new int[2];
-		endRampCoordinates = new int[2];
+		startRampCoordinates = new double[2];
+		endRampCoordinates = new double[2];
 		
-		
+		minSpeed = 0;
+	}
+	
+	public RoadSegment(RoadSegment rs) {
+		this.ID = rs.ID;
+		this.key = rs.key;
+		this.startRampCoordinates = rs.startRampCoordinates;
+		this.endRampCoordinates = rs.endRampCoordinates;
+		this.minSpeed = rs.minSpeed;
+		this.freeway = rs.freeway;
 	}
 	
 	public int getID() { return ID; }
@@ -27,17 +37,17 @@ public class RoadSegment
 	public String getKey() { return key; }
 	public void setKey(String key) { this.key = key; }
 	
-	public int getX1() { return startRampCoordinates[0]; }
-	public void setX1(int x) { startRampCoordinates[0] = x; }
+	public double getX1() { return startRampCoordinates[0]; }
+	public void setX1(double x) { startRampCoordinates[0] = x; }
 	
-	public int getY1() { return startRampCoordinates[1]; }
-	public void setY1(int y) { startRampCoordinates[1] = y; }
+	public double getY1() { return startRampCoordinates[1]; }
+	public void setY1(double y) { startRampCoordinates[1] = y; }
 	
-	public int getX2() { return endRampCoordinates[0]; }
-	public void setX2(int x) { endRampCoordinates[0] = x; }
+	public double getX2() { return endRampCoordinates[0]; }
+	public void setX2(double x) { endRampCoordinates[0] = x; }
 	
-	public int getY2() { return endRampCoordinates[1]; }
-	public void setY2(int y) { endRampCoordinates[1] = y; }
+	public double getY2() { return endRampCoordinates[1]; }
+	public void setY2(double y) { endRampCoordinates[1] = y; }
 	
 	public double getMinSpeed() { return minSpeed; }
 	public void setMinSpeed(double s) { minSpeed = s; }

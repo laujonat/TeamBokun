@@ -40,10 +40,13 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("./src/The101.txt"));
+			int j = 0;
+			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The101.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				N101.addRoadSeg(temp);
+				N101.getRoadSegAt(j).setID(j);
+				j++;
 			}
  
 		}
@@ -70,6 +73,7 @@ public class ConstructFreeways {
 		for(int i = (N101.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			S101.addRoadSeg(N101.getRoadSegAt(i));
+			S101.getRoadSegAt(i).setID(i);
 		}
 	}
 	
@@ -80,10 +84,13 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("./src/The405.txt"));
+			int j = 0;
+			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The405.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				N405.addRoadSeg(temp);
+				N405.getRoadSegAt(j).setID(j);
+				j++;
 			}
  
 		}
@@ -110,6 +117,7 @@ public class ConstructFreeways {
 		for(int i = (N405.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			S405.addRoadSeg(N405.getRoadSegAt(i));
+			S405.getRoadSegAt(i).setID(i);
 		}
 	}
 	
@@ -121,10 +129,13 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("./src/The10.txt"));
+			int j = 0;
+			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The10.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				E10.addRoadSeg(temp);
+				E10.getRoadSegAt(j).setID(j);
+				j++;
 			}
  
 		}
@@ -152,6 +163,7 @@ public class ConstructFreeways {
 		for(int i = (E10.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			W10.addRoadSeg(E10.getRoadSegAt(i));
+			W10.getRoadSegAt(i).setID(i);
 		}
 	}
 
@@ -162,10 +174,13 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("./src/The105.txt"));
+			int j = 0;
+			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The105.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				E105.addRoadSeg(temp);
+				E105.getRoadSegAt(j).setID(j);
+				j++;
 			}
  
 		}
@@ -193,6 +208,7 @@ public class ConstructFreeways {
 		for(int i = (E105.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			W105.addRoadSeg(E105.getRoadSegAt(i));
+			W105.getRoadSegAt(i).setID(i);
 		}
 	}
 	
@@ -259,7 +275,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(N101.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(N101.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return N101.getRoadSegAt(i);
 				
@@ -271,7 +287,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(N405.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(N405.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return N405.getRoadSegAt(i);
 			}
@@ -285,7 +301,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(S101.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(S101.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return S101.getRoadSegAt(i);
 				
@@ -297,7 +313,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(S405.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(S405.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return S405.getRoadSegAt(i);
 			}
@@ -311,7 +327,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(E10.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(E10.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return E10.getRoadSegAt(i);
 				
@@ -323,7 +339,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(E105.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(E105.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return E105.getRoadSegAt(i);
 			}
@@ -337,7 +353,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(W10.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(W10.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return W10.getRoadSegAt(i);
 				
@@ -349,7 +365,7 @@ public class ConstructFreeways {
 				do
 				{
 					i += 1;
-				} while(W105.getRoadSegAt(i).getKey() != onOffKey);
+				} while(!(W105.getRoadSegAt(i).getKey()).equalsIgnoreCase(onOffKey));
 				
 				return W105.getRoadSegAt(i);
 			}

@@ -92,12 +92,12 @@ public class MySQLConnect {
 		try {
 			prepStatement = connect.prepareStatement(query);
 			if(table.equals(CAR_TABLE)) {
-				prepStatement.setInt(1, (int)values[0]);
+				prepStatement.setInt(1, (Integer)values[0]);
 				prepStatement.setString(2, (String)values[1]);
-				prepStatement.setDouble(3, (double)values[2]);
+				prepStatement.setDouble(3, (Double)values[2]);
 				prepStatement.setString(4, (String)values[3]);
-				prepStatement.setInt(5, (int)values[4]);
-				prepStatement.setInt(6, (int)values[5]);
+				prepStatement.setInt(5, (Integer)values[4]);
+				prepStatement.setInt(6, (Integer)values[5]);
 			}
 			else {
 				//	Finish this later for freeway table

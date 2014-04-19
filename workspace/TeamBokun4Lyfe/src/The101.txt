@@ -1,57 +1,57 @@
-I-5 south (Santa Ana Freeway) Santa Ana
-Euclid Avenue
-SR 60 east (Pomona Freeway) / Soto Street Pomona
-Seventh Street
-Fourth Street
-First Street
-Cesar Chavez Avenue
-I-10 east (San Bernardino Freeway) San Bernardino
-Mission Road
-Vignes Street
-Alameda Street Union Station
-Los Angeles Street
-Spring Street
-Broadway
-Grand Avenue, Temple Street
-SR 110 north (Pasadena Freeway) / I-110 south (Harbor Freeway) Pasadena, San Pedro
-Glendale Boulevard, Echo Park Avenue, Union Avenue, Belmont Avenue
-SR 2 east (Alvarado Street)
-Rampart Boulevard, Benton Way
-Silver Lake Boulevard
-Vermont Avenue
-Melrose Avenue, Normandie Avenue
-SR 2 west (Santa Monica Boulevard) / Western Avenue
-Sunset Boulevard
-Hollywood Boulevard
-Gower Street
-Vine Street
-Cahuenga Boulevard Hollywood Bowl
-Highland Avenue (SR 170 south) Hollywood Bowl
-Barham Boulevard Burbank
-Universal Studios Boulevard
-Lankershim Boulevard Universal City
-Ventura Boulevard
-Vineland Avenue
-SR 134 east (Ventura Freeway) Pasadena
-SR 170 north (Hollywood Freeway) Sacramento
-Tujunga Avenue
-Laurel Canyon Boulevard Studio City
-Coldwater Canyon Avenue
-Woodman Avenue
-Van Nuys Boulevard
-Sepulveda Boulevard
-I-405 (San Diego Freeway) Santa Monica, Sacramento
-Haskell Avenue
-Hayvenhurst Avenue
-Balboa Boulevard Encino
-White Oak Avenue
-Reseda Boulevard
-Tampa Avenue
-Winnetka Avenue Woodland Hills
-De Soto Avenue, Serrania Avenue
-Canoga Avenue
-SR 27 (Topanga Canyon Boulevard) / Ventura Boulevard
-Shoup Avenue
-Fallbrook Avenue
-Woodlake Avenue
-Mulholland Drive, Valley Circle Boulevard
+I-5 south (Santa Ana Freeway) Santa Ana|34.02615,-118.20750
+Euclid Avenue|34.02698,-118.20967
+SR 60 east (Pomona Freeway) / Soto Street Pomona|34.02981,-118.21598
+Seventh Street|34.03411,-118.22115
+Fourth Street|34.04301,-118.22111
+First Street|34.04733,-118.22143
+Cesar Chavez Avenue|34.05047,-118.22287
+I-10 east (San Bernardino Freeway) San Bernardino|34.05246,-118.22465
+Mission Road|34.05293,-118.22654
+Vignes Street|34.05364,-118.23147
+Alameda Street Union Station|34.05426,-118.23793
+Los Angeles Street|34.05508,-118.23937
+Spring Street|34.05630,-118.24132
+Broadway|34.05698,-118.24237
+Grand Avenue, Temple Street|34.05911,-118.24548
+SR 110 north (Pasadena Freeway) / I-110 south (Harbor Freeway) Pasadena, San Pedro|34.06267,-118.24885
+Glendale Boulevard, Echo Park Avenue, Union Avenue, Belmont Avenue|34.06969,-118.26123
+SR 2 east (Alvarado Street)|34.07205,-118.26690
+Rampart Boulevard, Benton Way|34.07522,-118.27428
+Silver Lake Boulevard|34.07723,-118.28162
+Vermont Avenue|34.07986,-118.29173
+Melrose Avenue, Normandie Avenue|34.08359,-118.29876
+SR 2 west (Santa Monica Boulevard) / Western Avenue|34.09079,-118.30645
+Sunset Boulevard|34.09697,-118.31361
+Hollywood Boulevard|34.09839,-118.31462
+Gower Street|34.10432,-118.32247
+Vine Street|34.10649,-118.32844
+Cahuenga Boulevard Hollywood Bowl|34.10816,-118.33127
+Highland Avenue (SR 170 south) Hollywood Bowl|34.12067,-118.33917
+Barham Boulevard Burbank|34.12163,-118.33986
+Universal Studios Boulevard|34.12877,-118.34689
+Lankershim Boulevard Universal City|34.13680,-118.36155
+Ventura Boulevard|34.13793,-118.36288
+Vineland Avenue|34.14688,-118.37030
+SR 134 east (Ventura Freeway) Pasadena|34.15125,-118.37479
+SR 170 north (Hollywood Freeway) Sacramento|34.15383,-118.37846
+Tujunga Avenue|34.15409,-118.37899
+Laurel Canyon Boulevard Studio City|34.15445,-118.39653
+Coldwater Canyon Avenue|34.15678,-118.41380
+Woodman Avenue|34.15562,-118.43124
+Van Nuys Boulevard|34.15704,-118.44873
+Sepulveda Boulevard|34.15963,-118.46611
+I-405 (San Diego Freeway) Santa Monica, Sacramento|34.16056,-118.46952
+Haskell Avenue|34.16510,-118.47482
+Hayvenhurst Avenue|34.16544,-118.49240
+Balboa Boulevard Encino|34.17046,-118.50111
+White Oak Avenue|34.17119,-118.51851
+Reseda Boulevard|34.17325,-118.53598
+Tampa Avenue|34.17352,-118.55345
+Winnetka Avenue Woodland Hills|34.17228,-118.57095
+De Soto Avenue, Serrania Avenue|34.16814,-118.58821
+Canoga Avenue|34.16951,-118.59748
+SR 27 (Topanga Canyon Boulevard) / Ventura Boulevard|34.17077,-118.60580
+Shoup Avenue|34.16796,-118.61413
+Fallbrook Avenue|34.16457,-118.62329
+Woodlake Avenue|34.16205,-118.63044
+Mulholland Drive, Valley Circle Boulevard|34.15948,-118.63738

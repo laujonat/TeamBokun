@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 
 public class Car {
+	
 	private int			id;
 	private double		speed;
 	private Freeway		freeway;
@@ -25,7 +26,7 @@ public class Car {
 	public double getSpeed() { return speed; }
 	public void setSpeed(double speed) { this.speed = speed; }
 	
-	public int getFreeway() { return freeway.getName(); }
+	public String getFreeway() { return freeway.getName(); }
 	public void setFreeway(Freeway freeway) { this.freeway = freeway; }
 	
 	public RoadSegment getRoadSeg() { return roadSegment; }
@@ -39,7 +40,7 @@ public class Car {
 		String string = "";
 		string += "ID: " + id + "\n";
 		string += "Speed: " + speed + "\n";
-		string += "Direction: " + direction + "\n";
+//		string += "Direction: " + direction + "\n";
 //		string += "On/Off Ramp: " + onOffRamp + "\n";
 //		string += "Freeway: " + roadSegment.getFreewayName() + "\n";
 		string += "Hour: " + hour + "\n";

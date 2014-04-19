@@ -40,7 +40,7 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The101.txt"));
+			reader = new BufferedReader(new FileReader("./src/The101.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				N101.addRoadSeg(temp);
@@ -80,7 +80,7 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The405.txt"));
+			reader = new BufferedReader(new FileReader("./src/The405.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				N405.addRoadSeg(temp);
@@ -121,7 +121,7 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The10.txt"));
+			reader = new BufferedReader(new FileReader("./src/The10.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				E10.addRoadSeg(temp);
@@ -162,7 +162,7 @@ public class ConstructFreeways {
 		{
 			RoadSegment temp;
 			String tempKey;
-			reader = new BufferedReader(new FileReader("/Users/christopherobrien/Documents/USC/Spring2014/cs201/chobrien_CS201_GroupProject/src/The105.txt"));
+			reader = new BufferedReader(new FileReader("./src/The105.txt"));
 			while ((tempKey = reader.readLine()) != null) {
 				temp = new RoadSegment(tempKey);
 				E105.addRoadSeg(temp);

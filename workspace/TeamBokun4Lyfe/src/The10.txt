@@ -1,4 +1,4 @@
-SR 1 north (Pacific Coast Highway) Oxnard|34.01242k-118.49740
+SR 1 north (Pacific Coast Highway) Oxnard|34.01242,-118.49740
 4th Street, 5th Street|34.01249,-118.49047
 SR 1 south (Lincoln Boulevard) to SR 2 east|34.01481,-118.48594
 20th Street|34.02330,-118.47379
@@ -23,7 +23,7 @@ Los Angeles Street Convention Center|34.03205,-118.26239
 Maple Avenue|34.03121,-118.25995
 San Pedro Street|34.02967,-118.25611
 Central Avenue|34.02594,-118.24920
-Alameda Street|34.02473
+Alameda Street|34.02472,-118.23926
 Mateo Street, Santa Fe Avenue|34.02760,-118.23222
 I-5 south (Santa Ana Freeway) / SR 60 east (Pomona Freeway) Santa Ana, Pomona|34.02950,-118.224543
 Boyle Avenue|34.03395,-118.22081

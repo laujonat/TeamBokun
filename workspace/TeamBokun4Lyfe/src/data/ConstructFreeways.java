@@ -270,7 +270,6 @@ public class ConstructFreeways {
 		{
 			if(freeway.equalsIgnoreCase("101"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -282,7 +281,6 @@ public class ConstructFreeways {
 			}
 			else //if(freeway.equalsIgnoreCase("405"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -296,7 +294,6 @@ public class ConstructFreeways {
 		{
 			if(freeway.equalsIgnoreCase("101"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -308,7 +305,6 @@ public class ConstructFreeways {
 			}
 			else //if(freeway.equalsIgnoreCase("405"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -322,7 +318,6 @@ public class ConstructFreeways {
 		{
 			if(freeway.equalsIgnoreCase("10"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -334,7 +329,6 @@ public class ConstructFreeways {
 			}
 			else //if(freeway.equalsIgnoreCase("105"))
 			{
-				boolean found = false;
 				int i = -1;
 				do
 				{
@@ -348,7 +342,7 @@ public class ConstructFreeways {
 		{
 			if(freeway.equalsIgnoreCase("10"))
 			{
-				boolean found = false;
+
 				int i = -1;
 				do
 				{
@@ -360,7 +354,7 @@ public class ConstructFreeways {
 			}
 			else //if(freeway.equalsIgnoreCase("105"))
 			{
-				boolean found = false;
+
 				int i = -1;
 				do
 				{

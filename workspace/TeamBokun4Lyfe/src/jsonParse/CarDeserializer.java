@@ -8,6 +8,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import data.Car;
+import data.ConstructFreeways;
+import data.Freeway;
+import data.RoadSegment;
 
 //	Custom deserialization for cars
 public class CarDeserializer implements JsonDeserializer<Car>{
@@ -21,8 +24,11 @@ public class CarDeserializer implements JsonDeserializer<Car>{
 		String onOff = jsonObject.get("on/off ramp").getAsString();
 		String freeway = jsonObject.get("freeway").getAsString();
 		
-//		Car car = new Car(id, speed, direction, onOff, freeway);
-//		return car;
-		return null;
+		Freeway fwy = BokunCentral.freeways.getFreeway(freeway, direction);
+		RoadSegment rs = BokunCentral.freeways.getRoadSegment(freeway, direction, onOff);
+		
+		// check if car exists already exists
+		Car car = new Car(id, speed, fwy, rs);
+		return car;
 	}
 }

@@ -6,16 +6,21 @@ public class Freeway
 {
 
 	ArrayList<RoadSegment> segments; 
-	int name;
+	//int name;
+	String name;
 	int numRoadSeg;
 	
-	public Freeway()
+	public Freeway(String name)
 	{
+		
+		setName(name);
 		segments = new ArrayList<RoadSegment>();
+
 	}
 	
-	public int getName() { return name; }
-	public void setName(String freeway) { name = Integer.parseInt(freeway); }
+	public String getName() { return name; }
+	public void setName(String freeway) { this.name = freeway; }
+	//{ this.name = Integer.parseInt(freeway); }
 	
 	public RoadSegment getRoadSegAt(int i) { return segments.get(i); }
 	public void addRoadSeg(RoadSegment rs) { segments.add(rs); }
@@ -49,5 +54,10 @@ public class Freeway
 			return getRoadSegAt((currentID - 1)); 
 		}
 	}
+	
+//	public RoadSegment assignRoadSegment(String key)
+//	{
+//		for(int i = 0; i < )
+//	}
 	
 }

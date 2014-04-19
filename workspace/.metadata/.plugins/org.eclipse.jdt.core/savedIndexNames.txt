@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+/Users/jonlau92/TeamBokun/workspace/.metadata/.plugins/org.eclipse.jdt.core
-3335810878.index
-2183866354.index
-2015998176.index
-2252107112.index

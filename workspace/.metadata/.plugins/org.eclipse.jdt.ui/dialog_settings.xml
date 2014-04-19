@@ -16,9 +16,6 @@
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
-	<section name="ClasspathContainerSelectionPage">
-		<item value="3" key="index"/>
-	</section>
 	<section name="ProblemSeveritiesConfigurationBlock">
 		<item value="false" key="expanded4"/>
 		<item value="false" key="expanded3"/>
@@ -28,6 +25,9 @@
 		<item value="false" key="expanded6"/>
 		<item value="false" key="expanded5"/>
 		<item value="true" key="expanded0"/>
+	</section>
+	<section name="ClasspathContainerSelectionPage">
+		<item value="3" key="index"/>
 	</section>
 	<section name="JavaBuildConfigurationBlock">
 		<item value="false" key="expanded2"/>

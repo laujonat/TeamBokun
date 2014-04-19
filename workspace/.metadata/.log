@@ -596,3 +596,19 @@ Binding(ALT+SHIFT+X R,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.tm.tcf 4 0 2014-04-17 23:26:34.925
+!MESSAGE Cannot send datagram packet to /192.168.0.255
+!STACK 0
+java.io.IOException: Network is down
+	at java.net.PlainDatagramSocketImpl.send(Native Method)
+	at java.net.DatagramSocket.send(DatagramSocket.java:625)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendDatagramPacket(LocatorService.java:764)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendEmptyPacket(LocatorService.java:856)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendAll(LocatorService.java:866)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.refresh_timer(LocatorService.java:522)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.access$0(LocatorService.java:474)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService$1$1.run(LocatorService.java:184)
+	at org.eclipse.tm.tcf.protocol.Protocol$3.run(Protocol.java:209)
+	at org.eclipse.tm.tcf.EventQueue.run(EventQueue.java:99)
+	at java.lang.Thread.run(Thread.java:695)

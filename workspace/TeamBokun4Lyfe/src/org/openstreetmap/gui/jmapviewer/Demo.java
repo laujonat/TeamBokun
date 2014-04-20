@@ -66,6 +66,7 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     private ArrayList<PlotInfo> plotInfo;
     private ArrayList<DrawCar> carList;
     private DrawCar car = null;
+    private Car carObj;
 
     /**
      * Constructs the {@code Demo}.
@@ -79,60 +80,50 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         
         //	Wait until cars are populated
         while(!BokunCentral.jsonParser.isUpdated()) { System.out.print(""); }
-//        System.out.println(carData.allCars.size() + " THIS IS SIZE");
-        
+
+        map().addJMVListener(this);
+        map().setDisplayPositionByLatLon(34.035, -118.238, 11);
         ArrayList<Car> allCars = BokunCentral.jsonParser.getCars();
         ArrayList<DrawCar> carList = new ArrayList<DrawCar>();
 //        car = new DrawCar(map(), 33.97403, -118.38212);
+//    	double endX = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getX();
+//    	double endY = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getY();
+//
+//        car = new DrawCar(map(), 33.97403, -118.38212, allCars.get(0));
+//        car.destination(endX, endY);
 //        car.start();
         
 //        System.out.println("HERE " + allCars.size());
         
-        for(int i = 0; i < 10; ++i) {
-        	double startX = allCars.get(i).getLatitude();
-        	double startY = allCars.get(i).getLongitude();
-//        	car = new DrawCar(map(), startX, startY);
+        for(int i = 0; i < 20; ++i) {
+        	double factor = 1e5;
+//        	double startX = allCars.get(i).getLatitude();
+//        	double startY = allCars.get(i).getLongitude();
+        	
+        	double roundEndX = Math.round((allCars.get(i).getLatitude()) * factor) / factor;
+        	double roundEndY = Math.round((allCars.get(i).getLongitude()) * factor) / factor;
+        	
+        	car = new DrawCar(map(), roundEndX, roundEndY, allCars.get(i));
 //        	car.start();
         	carList.add(car);   	
         }
         
-        for(int i = 0; i < 10; ++i) {
+        for(int i = 0; i < 20; ++i) {
 //        	carList.get(i).start();
-        	double endX = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX();
-        	double endY = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY();
-//        	carList.get(i).destination(endX, endY, 11);
-//        	carList.get(i).start();
+        	double factor = 1e5;
+//        	double endX = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX();
+//        	double endY = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY();
+        	
+        	double roundEndX = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX()) * factor) / factor;
+        	double roundEndY = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY()) * factor) / factor;
+        	
+        	
+        	carList.get(i).destination(roundEndX, roundEndY);
+        	carList.get(i).start();
 
         }
-        
-//        map().getZoom()
-        
-        
-        
-        
-        //	To get starting point
-//        double startX = allCars.get(0).getLatitude();
-//        double startY = allCars.get(0).getLongitude();
-        
-        //	To get ending point
-//        double endX = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getX();
-//        double endY = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getY();
-        
-//        plotInfo = carData.aggregateCarLatLong();
-//        
-//        System.out.println("")
-//        
-//        for(int i = 0; i < plotInfo.size(); i++)
-//		{
-//			System.out.println(plotInfo.get(i).getLatitude() + " " + plotInfo.get(i).getLongitude()
-//					+ " " + plotInfo.get(i).getSpeed() + " " + plotInfo.get(i).getFwy());
-//		}
-        
-//        System.out.println(carData.allCars.size() +  " is the size");
-        // Listen to the map viewer for user operations so components will
-        // recieve events and update
-        map().addJMVListener(this);
-        map().setDisplayPositionByLatLon(34.035, -118.238, 11);
+
+
 
         // final JMapViewer map = new JMapViewer(new MemoryTileCache(),4);
         // map.setTileLoader(new OsmFileCacheTileLoader(map));

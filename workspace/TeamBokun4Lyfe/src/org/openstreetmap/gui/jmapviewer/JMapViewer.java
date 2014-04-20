@@ -54,7 +54,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     protected static final Point[] move = { new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1) };
 
     public static final int MAX_ZOOM = 17;
-    public static final int MIN_ZOOM = 11;
+    public static final int MIN_ZOOM = 0;
 
     protected List<MapMarker> mapMarkerList;
     protected List<MapRectangle> mapRectangleList;
@@ -958,6 +958,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     public void removeMapMarker(MapMarker marker) {
         mapMarkerList.remove(marker);
         repaint();
+        validate();
     }
 
     public void removeAllMapMarkers() {

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Timer;
 
@@ -26,38 +27,74 @@ public class DrawCar extends Thread implements ActionListener{
     public static final double MAX_LAT = 85.05112877980659;
     public static final double MIN_LAT = -85.05112877980659;
     private static int TILE_SIZE = 256;
-    int newYDestination;
-	int newXDestination;
-	int currentY;
-	int currentX;
-	
+    
+    
+    private double incrementX;
+    private double incrementY;
+    private double convert;
+    double factor = 1e5;
+    
+ 
 
 	
 	protected Point center;
 	
-	public DrawCar(JMapViewer treeMap, double x, double y) {
+	public DrawCar(JMapViewer treeMap, double x, double y, Car car) {
 		this.treeMap = treeMap;
-		currX = x;
-		currY = y;
-		
-		timer = new Timer(3, this);
+		double factor = 1e5;
+		double roundEndX = Math.round(x * factor) / factor;
+    	double roundEndY = Math.round(y * factor) / factor;
+		currX = roundEndX;
+		currY = roundEndY;
+		this.car = car;
+		timer = new Timer(5, this);
+//		timer.setInitialDelay(100);
 	}
 	
-	public void destination(double newX, double newY, int zoomLevel) {
+	// This function converts decimal degrees to radians
+	private double deg2rad(double deg) {
+	      return (deg * Math.PI / 180.0);
+	}
+	// This function converts radians to decimal degrees
+	private double rad2deg(double rad) {
+	      return (rad * 180.0 / Math.PI);
+	}
+	// http://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi
+	public double distance(double lat1, double lon1, double lat2, double lon2) {
+	      double theta = lon1 - lon2;
+	      double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+	      dist = Math.acos(dist);
+	      dist = rad2deg(dist);
+	      dist = dist * 60 * 1.1515;
+	      return (dist);
+	}
+	
+	public void destination(double newX, double newY) {
 		this.newX = newX;
 		this.newY = newY;
-		this.zoomLevel = zoomLevel;
+		
+		
 		
 	}
 	
 	@Override
 	public void run() {
 		treeMap.addMapMarker(new MapMarkerDot(currX, currY));
+//		double factor = 1e5;
 		
-		//	Get destination
-//		double destX = car.getFreewayObj().getNextRoadSeg(car.getRoadSeg()).getX();
-//		double destY = car.getFreewayObj().getNextRoadSeg(car.getRoadSeg()).getY();
+		double calcDistance = distance(currX, currY, newX, newY);
 		
+		double roundDistance = Math.round(calcDistance * factor) / factor;
+    	double roundSpeed = Math.round(car.getSpeed() * factor) / factor;
+    	
+    	double time = Math.round((roundDistance/roundSpeed) * factor) / factor; // minutes
+    	
+    	double convertToMili =  (Math.round((time * 60000) * factor) / factor); // milli
+//    	System.out.println("THIS IS CONVERTED" + convertToMili);
+    	
+    	convert = (Math.round((convertToMili/5) * factor) / factor);
+    	System.out.println("THIS IS CONVERTED" + convert);
+    	
 		timer.start();
 	}
 
@@ -68,118 +105,50 @@ public class DrawCar extends Thread implements ActionListener{
 		 * 
 		 */
 		if(newX == currX && newY == currY) {
-			timer.stop();
+				timer.stop();
 		}
-		
-		
-		
-//		treeMap.removeMapMarker(treeMap);
-
-		
+			
 		List markers = treeMap.getMapMarkerList();
 		
 		for(int k = 0; k < markers.size(); k++) {
 			carMarker = (MapMarkerDot) markers.get(k);
 			
-			if((carMarker.getLat() == currX) && (carMarker.getLon() == currY)){                                 
-                treeMap.removeMapMarker(carMarker);                       
+//			if((carMarker.getLat() >= (newX-.01) && (carMarker.getLat() <= (newX+0.01))) && (carMarker.getLon() <= (newY+.01) && (carMarker.getLon() >= (newY-.01)))){                                 
+//					timer.stop();
+				if(carMarker.getLat() == currX && carMarker.getLon() == currY) {
+				treeMap.removeMapMarker(carMarker);    
+//	                System.out.println("IN HERE");
                 break;                                              
             }
 		}
-//		currX += 0.00001;
-//		currY += 0.00001;
+//			timer.stop();
+//		}
+		
+
+		
 		
 		if(newX != currX) {
-			newYDestination = OsmMercator.LatToY(newY, zoomLevel);
-			System.out.println(newYDestination + " Y DEST");
-			newXDestination = OsmMercator.LonToX(newX, zoomLevel);
-			System.out.println(newXDestination + " X DEST");
-			currentY = OsmMercator.LatToY(currY, zoomLevel);
-			System.out.println(currentY + " Y CURRENT");
-			currentX = OsmMercator.LonToX(currX, zoomLevel);
-			System.out.println(currentX + " X CURRENT");
+			double yDistance = (Math.round((currY - newY) * factor) / factor);
+			double xDistance = (Math.round((currX - newX) * factor) / factor);
 			
-//			System.out.println(currentY + currentX + " ASDASDSD " + newYDestination);
-			slope = (newYDestination - currentY) / (newXDestination - currentX);
-			System.out.println(slope + " THIS IS SLOPE");
-			//	Moving to the left
-			if(newXDestination < currentX) {
-				currentX--;
-				currentY -= slope;
-			}
+			incrementY = (Math.round((yDistance/convert) * factor) / factor); 
+			incrementX = (Math.round((xDistance/convert) * factor) / factor); 
+//			System.out.println(currY + " YINCRE");
+//			System.out.println(newY + " XNINCRE");
 			
-			//	Moving to the right
-			else if(newXDestination > currentX) {
-				currentX++;
-				currentY += slope;
-			}
-		}
-		else {
-			if(currentY < newYDestination)
-				currentY++;
-			else
-				currentY--;
+			currY -= incrementY;
+			currX -= incrementX;
 		}
 		
-		
-//		
-//		newX  = OsmMercator.XToLon(currentX, zoomLevel);
-//		newY = OsmMercator.YToLat(currentY, zoomLevel);
-		
-		
+//		currY += 0.00001;
+//		currX += 0.00001;
+//		treeMap.removeAllMapMarkers();
 		treeMap.addMapMarker(new MapMarkerDot(currX, currY));
 		
-	}
-	
+		
 
-	
-	public static double XToLon(int aX, int aZoomlevel) {
-        return ((360d * aX) / getMaxPixels(aZoomlevel)) - 180.0;
-    }
-	
-	public static int falseEasting(int aZoomlevel) {
-        return getMaxPixels(aZoomlevel) / 2;
-    }
-	
-	public static int falseNorthing(int aZoomlevel) {
-        return (-1 * getMaxPixels(aZoomlevel) / 2);
-    }
-	
-	public static double radius(int aZoomlevel) {
-	        return (TILE_SIZE * (1 << aZoomlevel)) / (2.0 * Math.PI);
+		
 	}
-	
-    public static double YToLat(int aY, int aZoomlevel) {
-        aY += falseNorthing(aZoomlevel);
-        double latitude = (Math.PI / 2) - (2 * Math.atan(Math.exp(-1.0 * aY / radius(aZoomlevel))));
-        return -1 * Math.toDegrees(latitude);
-    }
-	
-    public static int getMaxPixels(int aZoomlevel) {
-        return TILE_SIZE * (1 << aZoomlevel);
-    }
-    
-    public static int LonToX(double aLongitude, int aZoomlevel) {
-        int mp = getMaxPixels(aZoomlevel);
-        int x = (int) ((mp * (aLongitude + 180l)) / 360l);
-        x = Math.min(x, mp - 1);
-        return x;
-    }
-	
-	  public static int LatToY(double aLat, int aZoomlevel) {
-	        if (aLat < MIN_LAT)
-	            aLat = MIN_LAT;
-	        else if (aLat > MAX_LAT)
-	            aLat = MAX_LAT;
-	        double sinLat = Math.sin(Math.toRadians(aLat));
-	        double log = Math.log((1.0 + sinLat) / (1.0 - sinLat));
-	        int mp = getMaxPixels(aZoomlevel);
-	        int y = (int) (mp * (0.5 - (log / (4.0 * Math.PI))));
-	        y = Math.min(y, mp - 1);
-	        return y;
-	    }
-	
-	
 	
 	/**
 	 * carMarker = new MapMarkerDot(x, y);

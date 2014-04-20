@@ -38,9 +38,11 @@ public class Freeway
 		if(carHour == hour)
 		{
 			addSpeed(speed);
+			updateDatabase(calculateAvgSpeed(), carHour);
 		}
 		else //NEW HOUR! YAY
 		{
+//			System.out.println(calculateAvgSpeed() + " hour: " + carHour);
 			updateDatabase(calculateAvgSpeed(), carHour);
 			speeds.clear();
 			if(carHour == 23) { carHour = 0; }
@@ -77,8 +79,8 @@ public class Freeway
 		int currentID = rs.getID();
 		if((getNumRoadSeg() - 1) == currentID)
 		{
-			System.out.println("Current Road Segment is the last one.");
-			return getRoadSegAt((currentID));
+//			System.out.println("Current Road Segment is the last one.");
+			return null;
 		}
 		else
 		{
@@ -91,8 +93,8 @@ public class Freeway
 		
 		if(getNumRoadSeg() == 0)
 		{
-			System.out.println("Current Road Segment is the first one.");
-			return getRoadSegAt(currentID);
+//			System.out.println("Current Road Segment is the first one.");
+			return null;
 		}
 		else
 		{

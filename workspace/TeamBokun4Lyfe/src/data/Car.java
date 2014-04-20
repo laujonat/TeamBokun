@@ -22,6 +22,9 @@ public class Car {
 		this.longitude = rs.getY();
 		Calendar time = Calendar.getInstance();
 		hour = time.get(Calendar.HOUR_OF_DAY);
+		
+		freeway.checkTheHour(hour, speed);
+		
 	}
 	
 	public int getId() { return id; }

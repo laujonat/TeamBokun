@@ -33,7 +33,6 @@ public class CarJsonParser extends Thread {
 	//	Update data every 3 minutes
 	@Override
 	public void run() {
-		int x = 1;
 		while(true) {
 			BufferedReader br = null;
 			
@@ -94,8 +93,7 @@ public class CarJsonParser extends Thread {
 			finally {
 				try {
 					br.close();
-					System.out.println("Done with update " + x);
-					x++;
+					System.out.println("Cars have been updated");
 					Thread.sleep(180000);
 				}
 				catch(IOException e) {System.err.println("Unknown error: "  + e.getMessage()); }

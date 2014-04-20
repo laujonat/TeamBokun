@@ -57,11 +57,8 @@ public class BokunCentral {
 		PlotInfo temp;
 		for(int i = 0; i < allCars.size(); i++)
 		{
-//			System.out.println(allCars.get(i).toString());
 			temp = new PlotInfo((((allCars.get(i)).getRoadSeg()).getX()), (((allCars.get(i)).getRoadSeg()).getY()), ((allCars.get(i)).getSpeed()), ((allCars.get(i)).getFreeway()));
 			aggregatedData.add(temp);
-//			System.out.println(allCars.get(i).getRoadSeg().toString());
-//			System.out.println(allCars.get(i).getRoadSeg().getX1() + " " + allCars.get(i).getRoadSeg().getY1());
 		}
 		
 		return aggregatedData;

@@ -3,7 +3,7 @@ La Tijera Boulevard|33.97403,-118.38212
 Howard Hughes Parkway, Sepulveda Boulevard|33.97271,-118.37938
 Sepulveda Boulevard, Slauson Avenue (SR 90 east)|33.97970,-118.39257
 Jefferson Boulevard|33.99020,-118.40121
-SR 90 west (Marina Freeway) - Marina del Rey|33.98482,-118.39664
+SR 90 west (Marina Freeway)   Marina del Rey|33.98482,-118.39664
 Culver Boulevard, Washington Boulevard   Culver City|33.99872,-118.40757
 Venice Boulevard (SR 187), Washington Boulevard|34.00839,-118.41528
 National Boulevard|34.02335,-118.42709

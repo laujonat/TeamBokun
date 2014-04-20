@@ -179,8 +179,6 @@ public class ConstructFreeways {
 					temp.setX1(prev.getX2());
 					temp.setY1(prev.getY2());
 				}
-				System.out.println(temp.getX1() + ", " + temp.getY1());
-				System.out.println(temp.getX2() + ", " + temp.getY2() + "\n");
 			}
 		}
 		catch (IOException e)
@@ -248,8 +246,6 @@ public class ConstructFreeways {
 					temp.setX1(prev.getX2());
 					temp.setY1(prev.getY2());
 				}
-				System.out.println(temp.getX1() + ", " + temp.getY1());
-				System.out.println(temp.getX2() + ", " + temp.getY2() + "\n");
 			}
 		}
 		catch (IOException e)

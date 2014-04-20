@@ -18,14 +18,18 @@ public class BokunCentral {
 		try {
 			SQLConnection = new MySQLConnect();
 			freeways = new ConstructFreeways();
-			jsonParser = new CarJsonParser("");
+			jsonParser = new CarJsonParser();
 			
 			allCars = new ArrayList<Car>();
 		}
-		catch(Exception e) { System.err.println("System error: " + e.getMessage()); }
+		catch(Exception e) {
+			System.err.println("System error: ");
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
-		
+		BokunCentral bc = new BokunCentral();
+//		freeways.displayFreewayExits();
 	}
 }

@@ -10,6 +10,7 @@ import java.net.URLConnection;
 import java.sql.SQLException;
 
 public class DirectionsJsonParser {
+	int[] timeToDest;		//	timeToDest[0] = minutes		timeToDest[1] = hours
 
 	public void requestDirections() {
 		BufferedReader br = null;
@@ -20,7 +21,7 @@ public class DirectionsJsonParser {
 	
 //		    url = new URL("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json");
 		    url = new URL("http://maps.googleapis.com/maps/api/directions/json?origin=3025+royal+street+los+angeles&destination=3131+mcclintock+street+los+angeles&sensor=false");
-	
+	//	   "text" : "5 hours 39 mins",
 		    connection = url.openConnection(); 
 		    connection.setDoInput(true); 
 		    connection.setUseCaches(false);
@@ -29,8 +30,14 @@ public class DirectionsJsonParser {
 		    br = new BufferedReader(new InputStreamReader(dataStreamer));
 			
 		    String line;
-		    while((line = br.readLine()) != null)
+		    String feedback = "";
+		    while((line = br.readLine()) != null) {
+		    	feedback += line;
 		    	System.out.println(line);
+		    }
+		    feedback = feedback.replaceAll("\\s+", "");
+		    
+		    System.out.println(feedback);
 		    
 //			String jsonString = br.readLine();
 //			if(jsonString == null) {

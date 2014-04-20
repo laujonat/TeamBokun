@@ -59,6 +59,17 @@ public class RoadSegment
 		freeway = f;
 	}
 	
-	
+	@Override
+	public String toString() {
+		String string = "";
+		string += "ID: " + ID + "\n";
+		string += "key: " + key + "\n";
+		string += "Start Lat/Long: " + startRampCoordinates[0] + ", " + startRampCoordinates[1] + "\n";
+		string += "End Lat/Long: " + endRampCoordinates[0] + ", " + endRampCoordinates[1] + "\n";
+		string += "minSpeed: " + minSpeed + "\n";
+		string += "freeway: " + freeway.getName() + "\n";
+		
+		return string;
+	}
 	
 }

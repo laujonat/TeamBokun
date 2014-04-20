@@ -35,18 +35,24 @@ public class ConstructFreeways {
 	public static void constructN101()
 	{
 		N101 = new Freeway("101 North");
-		
 		try 
 		{
 			RoadSegment temp;
-			String tempKey;
-			reader = new BufferedReader(new FileReader("./src/The101.txt"));
+			String tempKey, line;
 			int id = 0;
-			while ((tempKey = reader.readLine()) != null) {
+			reader = new BufferedReader(new FileReader("./src/The101.txt"));
+			while ((line = reader.readLine()) != null) {
+				String[] split = line.split("\\|");
+				tempKey = split[0];
 				temp = new RoadSegment(tempKey, id++, N101);
 				N101.addRoadSeg(temp);
+				
+				//	Get coordinates
+				String[] coords = split[1].split(",");
+				
+				temp.setX(Double.parseDouble(coords[0]));
+				temp.setY(Double.parseDouble(coords[1]));
 			}
- 
 		}
 		catch (IOException e)
 		{
@@ -72,9 +78,10 @@ public class ConstructFreeways {
 		for(int i = (N101.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = N101.getRoadSegAt(i);
-			rs.setFreeway(S101);
-			rs.setID(id++);
-			S101.addRoadSeg(rs);
+			RoadSegment copy = new RoadSegment(rs);
+			copy.setFreeway(S101);
+			copy.setID(id++);
+			S101.addRoadSeg(copy);
 		}
 	}
 	
@@ -96,24 +103,9 @@ public class ConstructFreeways {
 				//	Get coordinates
 				String[] coords = split[1].split(",");
 				
-				//	First seg will start and stop at same point
-				if(id == 1) {
-					temp.setX1(Double.parseDouble(coords[0]));
-					temp.setY1(Double.parseDouble(coords[1]));
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-				}
-				else {
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-					
-					//	Find end coordinates of previous segment
-					RoadSegment prev = N405.getPrevRoadSeg(temp);
-					temp.setX1(prev.getX2());
-					temp.setY1(prev.getY2());
-				}
+				temp.setX(Double.parseDouble(coords[0]));
+				temp.setY(Double.parseDouble(coords[1]));
 			}
- 
 		}
 		catch (IOException e)
 		{
@@ -139,9 +131,10 @@ public class ConstructFreeways {
 		for(int i = (N405.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = N405.getRoadSegAt(i);
-			rs.setFreeway(S405);
-			rs.setID(id++);
-			S405.addRoadSeg(rs);
+			RoadSegment copy = new RoadSegment(rs);
+			copy.setFreeway(S405);
+			copy.setID(id++);
+			S405.addRoadSeg(copy);
 		}
 	}
 	
@@ -163,22 +156,8 @@ public class ConstructFreeways {
 				//	Get coordinates
 				String[] coords = split[1].split(",");
 				
-				//	First seg will start and stop at same point
-				if(id == 1) {
-					temp.setX1(Double.parseDouble(coords[0]));
-					temp.setY1(Double.parseDouble(coords[1]));
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-				}
-				else {
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-					
-					//	Find end coordinates of previous segment
-					RoadSegment prev = E10.getPrevRoadSeg(temp);
-					temp.setX1(prev.getX2());
-					temp.setY1(prev.getY2());
-				}
+				temp.setX(Double.parseDouble(coords[0]));
+				temp.setY(Double.parseDouble(coords[1]));
 			}
 		}
 		catch (IOException e)
@@ -196,7 +175,6 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-
 	}
 	
 	public static void constructW10()
@@ -206,9 +184,10 @@ public class ConstructFreeways {
 		for(int i = (E10.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = E10.getRoadSegAt(i);
-			rs.setFreeway(W10);
-			rs.setID(id++);
-			W10.addRoadSeg(rs);
+			RoadSegment copy = new RoadSegment(rs);
+			copy.setFreeway(W10);
+			copy.setID(id++);
+			W10.addRoadSeg(copy);
 		}
 	}
 
@@ -230,22 +209,8 @@ public class ConstructFreeways {
 				//	Get coordinates
 				String[] coords = split[1].split(",");
 				
-				//	First seg will start and stop at same point
-				if(id == 1) {
-					temp.setX1(Double.parseDouble(coords[0]));
-					temp.setY1(Double.parseDouble(coords[1]));
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-				}
-				else {
-					temp.setX2(Double.parseDouble(coords[0]));
-					temp.setY2(Double.parseDouble(coords[1]));
-					
-					//	Find end coordinates of previous segment
-					RoadSegment prev = E105.getPrevRoadSeg(temp);
-					temp.setX1(prev.getX2());
-					temp.setY1(prev.getY2());
-				}
+				temp.setX(Double.parseDouble(coords[0]));
+				temp.setY(Double.parseDouble(coords[1]));
 			}
 		}
 		catch (IOException e)
@@ -272,9 +237,10 @@ public class ConstructFreeways {
 		for(int i = (E105.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = E105.getRoadSegAt(i);
-			rs.setFreeway(W105);
-			rs.setID(id++);
-			W105.addRoadSeg(rs);
+			RoadSegment copy = new RoadSegment(rs);
+			copy.setFreeway(W105);
+			copy.setID(id++);
+			W105.addRoadSeg(copy);
 		}
 	}
 	

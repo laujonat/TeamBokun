@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CarJsonParser extends Thread {
+	private boolean updated = false;
 	private ArrayList<Car> cars = new ArrayList<Car>();
 	
 	private GsonBuilder gsonBuilder;
@@ -94,6 +95,8 @@ public class CarJsonParser extends Thread {
 				try {
 					br.close();
 					System.out.println("Cars have been updated");
+					updated = true;
+					//	Wait 3 minutes for next update
 					Thread.sleep(180000);
 				}
 				catch(IOException e) {System.err.println("Unknown error: "  + e.getMessage()); }
@@ -117,4 +120,7 @@ public class CarJsonParser extends Thread {
 		for(int i = 0; i < cars.size(); i++)
 			System.out.println(cars.get(i));
 	}
+	
+	//	Returns updated state
+	public boolean isUpdated() { return updated; }
 }

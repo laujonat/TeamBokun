@@ -49,30 +49,9 @@ public class HistDataWindow extends JFrame {
 		};
 		//graphPanel.setBackground(Color.BLUE);
 		
-		
-		//TABLE
-		String[] columnNames = { "Hours", "East 10", "West 10", "East 105", "West 105", "South 101", "North 101", "South 405", "North 405"};
-		Object[][] data = { {"0", "", "", "", "", "", "", "", ""}, {"1", "", "", "", "", "", "", "", ""}, {"2", "", "", "", "", "", "", "", ""}, {"3", "", "", "", "", "", "", "", ""}, {"4", "", "", "", "", "", "", "", ""}, {"5", "", "", "", "", "", "", "", ""}, {"6", "", "", "", "", "", "", "", ""}, {"7", "", "", "", "", "", "", "", ""}, {"8", "", "", "", "", "", "", "", ""}, {"9", "", "", "", "", "", "", "", ""}, {"10", "", "", "", "", "", "", "", ""}, {"11", "", "", "", "", "", "", "", ""}, {"12", "", "", "", "", "", "", "", ""}, {"13", "", "", "", "", "", "", "", ""}, {"14", "", "", "", "", "", "", "", ""},
-				{"15", "", "", "", "", "", "", "", ""}, {"16", "", "", "", "", "", "", "", ""}, {"17", "", "", "", "", "", "", "", ""}, {"18", "", "", "", "", "", "", "", ""}, {"19", "", "", "", "", "", "", "", ""}, {"20", "", "", "", "", "", "", "", ""}, {"21", "", "", "", "", "", "", "", ""}, {"22", "", "", "", "", "", "", "", ""}, {"23", "", "", "", "", "", "", "", ""}};
-		
-		JTable table = new JTable(data, columnNames);
-		table.setPreferredScrollableViewportSize(new Dimension(595, 385));
-		table.setFillsViewportHeight(true);
-		
-		JScrollPane scrollPane = new JScrollPane(table);
-		JLabel tableLable = new JLabel("Average Speeds");
-		tablePanel.add(tableLable);
-		tablePanel.add(scrollPane);
-		
-		//GRAPH
+		//retrieve freeway data
 		int firstFilled = 0;
 		int lastFilled = 23;
-		//boolean allfilled = ;
-//		if(!allfilled)
-//		{
-//			firstFilled = 
-//			lastFilled =
-//		}
 		
 		double[] E10Speeds = null;
 		double[] W10Speeds = null;
@@ -114,6 +93,64 @@ public class HistDataWindow extends JFrame {
 				}
 			}
 		}
+		
+		
+		//TABLE
+		String[] columnNames = { "Hours", "East 10", "West 10", "East 105", "West 105", "South 101", "North 101", "South 405", "North 405"};
+		Object[][] data = new Object[24][10];
+		for(int i = 0; i < 9; i++)
+		{
+			for(int j = 0; j < 24; j++)
+			{
+				if(i == 0)
+				{
+					data[j][i] = j;
+				}
+				else if(i == 1)
+				{
+					data[j][i] = E10Speeds[j];
+				}
+				else if(i == 2)
+				{
+					data[j][i] = W10Speeds[j];
+				}
+				else if(i == 3)
+				{
+					data[j][i] = E105Speeds[j];
+				}
+				else if(i == 4)
+				{
+					data[j][i] = W105Speeds[j];
+				}
+				else if(i == 5)
+				{
+					data[j][i] = S101Speeds[j];
+				}
+				else if(i == 6)
+				{
+					data[j][i] = N101Speeds[j];
+				}
+				else if(i == 7)
+				{
+					data[j][i] = S405Speeds[j];
+				}
+				else if(i == 8)
+				{
+					data[j][i] = N405Speeds[j];
+				}
+			}
+		}
+		
+		JTable table = new JTable(data, columnNames);
+		table.setPreferredScrollableViewportSize(new Dimension(595, 385));
+		table.setFillsViewportHeight(true);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		JLabel tableLable = new JLabel("Average Speeds");
+		tablePanel.add(tableLable);
+		tablePanel.add(scrollPane);
+		
+		//GRAPH
 		
 		XYSeries east10 = new XYSeries("East 10");
 		for(int i = firstFilled; i < (lastFilled + 1); i++)

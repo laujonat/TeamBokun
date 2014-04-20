@@ -31,6 +31,7 @@ public class Car {
 	public void setSpeed(double speed) { this.speed = speed; }
 	
 	public String getFreeway() { return freeway.getName(); }
+	public Freeway getFreewayObj() { return freeway; }
 	public void setFreeway(Freeway freeway) { this.freeway = freeway; }
 	
 	public RoadSegment getRoadSeg() { return roadSegment; }

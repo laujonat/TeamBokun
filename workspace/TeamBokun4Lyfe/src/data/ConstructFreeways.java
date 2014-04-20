@@ -34,7 +34,7 @@ public class ConstructFreeways {
 	
 	public static void constructN101()
 	{
-		N101 = new Freeway("101 North");
+		N101 = new Freeway("N101");
 		try 
 		{
 			RoadSegment temp;
@@ -73,7 +73,7 @@ public class ConstructFreeways {
 	
 	public static void constructS101()
 	{
-		S101 = new Freeway("101 South");
+		S101 = new Freeway("S101");
 		int id = 0;
 		for(int i = (N101.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -87,7 +87,7 @@ public class ConstructFreeways {
 	
 	public static void constructN405()
 	{
-		N405 = new Freeway("405 North");
+		N405 = new Freeway("N405");
 		try 
 		{
 			RoadSegment temp;
@@ -126,7 +126,7 @@ public class ConstructFreeways {
 	
 	public static void constructS405()
 	{
-		S405 = new Freeway("405 South");
+		S405 = new Freeway("S405");
 		int id = 0;
 		for(int i = (N405.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -140,7 +140,7 @@ public class ConstructFreeways {
 	
 	public static void constructE10()
 	{
-		E10 = new Freeway("10 East");
+		E10 = new Freeway("E10");
 		try 
 		{
 			RoadSegment temp;
@@ -179,7 +179,7 @@ public class ConstructFreeways {
 	
 	public static void constructW10()
 	{
-		W10 = new Freeway("10 West");
+		W10 = new Freeway("W10");
 		int id = 0;
 		for(int i = (E10.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -193,7 +193,7 @@ public class ConstructFreeways {
 
 	public static void constructE105()
 	{
-		E105 = new Freeway("105 East");
+		E105 = new Freeway("E105");
 		try 
 		{
 			RoadSegment temp;
@@ -232,7 +232,7 @@ public class ConstructFreeways {
 	
 	public static void constructW105()
 	{
-		W105 = new Freeway("105 West");
+		W105 = new Freeway("W105");
 		int id = 0;
 		for(int i = (E105.getNumRoadSeg() - 1); i >= 0; i--)
 		{

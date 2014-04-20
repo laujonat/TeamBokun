@@ -1,5 +1,6 @@
 package central;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jsonParse.CarJsonParser;
@@ -44,6 +45,16 @@ public class BokunCentral {
 		
 	}
 
+	public static void updateDatabase(double avg, int hour, String freeway) {
+		try {
+			SQLConnection.updateTable(hour, new String[] {freeway + "Speed"}, new double[] {avg});
+		}
+		catch(SQLException e) {
+			System.out.println("SQL error: ");
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		BokunCentral bc = new BokunCentral();
 		

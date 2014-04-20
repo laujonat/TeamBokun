@@ -3,15 +3,17 @@ package data;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import central.BokunCentral;
+
 public class Freeway
 {
 
-	ArrayList<RoadSegment> segments; 
+	private ArrayList<RoadSegment> segments; 
 	//int name;
-	String name;
-	int numRoadSeg;
-	ArrayList<Double> speeds;
-	int carHour;
+	private String name;
+	private int numRoadSeg;
+	private ArrayList<Double> speeds;
+	private int carHour;
 	
 	public Freeway(String name)
 	{
@@ -65,7 +67,7 @@ public class Freeway
 	
 	public void updateDatabase(double avg, int hour)
 	{
-		//CODE HERE
+		BokunCentral.updateDatabase(avg, hour, name);
 	}
 	
 	public int getNumRoadSeg() { return (segments.size()); }

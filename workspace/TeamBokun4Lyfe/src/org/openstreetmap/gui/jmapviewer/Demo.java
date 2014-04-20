@@ -40,6 +40,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
 import central.BokunCentral;
 import central.PlotInfo;
+import data.Car;
 
 /**
  *
@@ -48,7 +49,7 @@ import central.PlotInfo;
  * @author Jan Peter Stotz
  *
  */
-public class Demo extends JFrame implements JMapViewerEventListener  {
+public class Demo extends JFrame implements JMapViewerEventListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,7 +64,8 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
     
     private BokunCentral carData;
     private ArrayList<PlotInfo> plotInfo;
-    private DrawCar car;
+    private ArrayList<DrawCar> carList;
+    private DrawCar car = null;
 
     /**
      * Constructs the {@code Demo}.
@@ -76,21 +78,55 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         carData = new BokunCentral();
         
         //	Wait until cars are populated
-        
+        while(!BokunCentral.jsonParser.isUpdated()) { System.out.print(""); }
 //        System.out.println(carData.allCars.size() + " THIS IS SIZE");
         
-        while(BokunCentral.jsonParser.getCars().size() == 0)
-		{
-			System.out.print("");
-		}
+        ArrayList<Car> allCars = BokunCentral.jsonParser.getCars();
+        ArrayList<DrawCar> carList = new ArrayList<DrawCar>();
+//        car = new DrawCar(map(), 33.97403, -118.38212);
+//        car.start();
         
-        plotInfo = carData.aggregateCarLatLong();
+//        System.out.println("HERE " + allCars.size());
         
-        for(int i = 0; i < plotInfo.size(); i++)
-		{
-			System.out.println(plotInfo.get(i).getLatitude() + " " + plotInfo.get(i).getLongitude()
-					+ " " + plotInfo.get(i).getSpeed() + " " + plotInfo.get(i).getFwy());
-		}
+        for(int i = 0; i < 10; ++i) {
+        	double startX = allCars.get(i).getLatitude();
+        	double startY = allCars.get(i).getLongitude();
+//        	car = new DrawCar(map(), startX, startY);
+//        	car.start();
+        	carList.add(car);   	
+        }
+        
+        for(int i = 0; i < 10; ++i) {
+//        	carList.get(i).start();
+        	double endX = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX();
+        	double endY = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY();
+//        	carList.get(i).destination(endX, endY, 11);
+//        	carList.get(i).start();
+
+        }
+        
+//        map().getZoom()
+        
+        
+        
+        
+        //	To get starting point
+//        double startX = allCars.get(0).getLatitude();
+//        double startY = allCars.get(0).getLongitude();
+        
+        //	To get ending point
+//        double endX = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getX();
+//        double endY = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getY();
+        
+//        plotInfo = carData.aggregateCarLatLong();
+//        
+//        System.out.println("")
+//        
+//        for(int i = 0; i < plotInfo.size(); i++)
+//		{
+//			System.out.println(plotInfo.get(i).getLatitude() + " " + plotInfo.get(i).getLongitude()
+//					+ " " + plotInfo.get(i).getSpeed() + " " + plotInfo.get(i).getFwy());
+//		}
         
 //        System.out.println(carData.allCars.size() +  " is the size");
         // Listen to the map viewer for user operations so components will
@@ -115,6 +151,7 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
 
         zoomLabel=new JLabel("Zoom: ");
         zoomValue=new JLabel(String.format("%s", map().getZoom()));
+//        System.out.println("MAP SOOM" + map().getZoom());
 
         add(panel, BorderLayout.NORTH);
 //        add(helpPanel, BorderLayout.WEST);
@@ -180,19 +217,6 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         panelBottom.add(destinationTextField);
         panelBottom.add(button);
         panel.add(panelBottom, BorderLayout.NORTH);
-        //panelTop.add(tileSourceSelector);
-       // panelTop.add(tileLoaderSelector);
-//        panelBottom.add(jta);
-
-        
-        
-//        panelTop.add(tileSourceSelector);
-//        panelTop.add(tileLoaderSelector);
-        
-        /*
-         * ADDS BUTTONS TO THE TOP OF THE GUI
-         */
-        
         
         
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
@@ -251,38 +275,14 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         JButton exportData = new JButton("Export Data");
         panelTop.add(histData);
         panelTop.add(exportData);
-//        panelBottom.add(showZoomControls);
-//        final JCheckBox scrollWrapEnabled = new JCheckBox("Scrollwrap enabled");
-//        scrollWrapEnabled.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                map().setScrollWrapEnabled(scrollWrapEnabled.isSelected());
-//            }
-//        });
-//        panelBottom.add(scrollWrapEnabled);
-//        panelBottom.add(button);
-        
-//        panelTop.add(zoomLabel);
-//        panelTop.add(zoomValue);
-//        panelTop.add(mperpLabelName);
-//        panelTop.add(mperpLabelValue);
-//        panelTop.add(zoomLabel);
-//        panelTop.add(zoomValue);
-//        panelTop.add(mperpLabelName);
-//        panelTop.add(mperpLabelValue);
+
         
         add(treeMap, BorderLayout.CENTER);
         add(jta, BorderLayout.SOUTH);
-//        helpPanel.setVisible(true);
-//        panelBottom.add(button);
-//        panelBottom.add(button, BorderLayout.LINE_END);
-        /*
-         * This is where the marking starts
-         * WE should change the coordinates
-         */
 
         
-        car = new DrawCar(map(), 33.97403, -118.38212);
-        car.start();
+        
+
         /*
          * for loop
          * loop through array list of draw cars

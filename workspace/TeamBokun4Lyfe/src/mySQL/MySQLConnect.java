@@ -34,6 +34,30 @@ public class MySQLConnect {
 		catch(Exception e) { throw e; }
 	}
 	
+	//	Returns all average speeds of a freeway
+	public double[] getAverageSpeedsOf(String freeway) throws SQLException {
+		String query = "SELECT " + freeway + "Speed FROM " + TABLE;
+		try {
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery(query);
+			
+			double[] speeds = new double[24];
+			
+			int i = 0;
+			while(resultSet.next())
+				speeds[i++] = resultSet.getDouble(1);
+			
+			return speeds;
+		}
+		catch(SQLException e) { throw e; }
+		finally {
+			if(statement != null)
+				statement.close();
+		}
+	}
+	
+	//	Return speed at hour of freeway
+	
 	//	Print all records from a table
 	public void printRecordsFromTable(String table) throws SQLException {
 		System.out.println("\nPrinting all records from table " + table + "...");
@@ -270,25 +294,25 @@ public class MySQLConnect {
 //		}
 //	}
 	
-//	public static void main(String[] args) {
-//		try {
-//			MySQLConnect connection = new MySQLConnect();
-//			
+	public static void main(String[] args) {
+		try {
+			MySQLConnect connection = new MySQLConnect();
+			
 //			connection.printRecordsFromTable(connection.TABLE);
 //			connection.updateTable(14, new String[] {"S101Speed", "N405Speed"}, new double[] {3, 5});
 //			connection.printRecordsFromTable(connection.TABLE);
-////			connection.insertIntoTable(new String[] {"ID", "Freeway", "OnOffRamp", "Long1", "Lat1", "Long2", "Lat2", "MinSpeed"},
-////									   new Object[] {3, "N101", "Exit 12", 1.0, 2.0, 3.0, 4.0, 45.0},
-////									   SEGMENTS_TABLE);
-////			connection.printRecordsFromTable(SEGMENTS_TABLE);
-//////			connection.deleteFromTable(4, "Cars");
-////			connection.deleteSegments(3, "N101");
-////			connection.printRecordsFromTable(SEGMENTS_TABLE);
-////			connection.updateSegments(1, "E10", new String[] {"Freeway"}, new Object[] {"Balls"});
-////			connection.printRecordsFromTable(SEGMENTS_TABLE);
-//		}
-//		catch(Exception e) {
-//			System.err.println("Error: " + e.getMessage());
-//		}
-//	}
+//			connection.insertIntoTable(new String[] {"ID", "Freeway", "OnOffRamp", "Long1", "Lat1", "Long2", "Lat2", "MinSpeed"},
+//									   new Object[] {3, "N101", "Exit 12", 1.0, 2.0, 3.0, 4.0, 45.0},
+//									   SEGMENTS_TABLE);
+//			connection.printRecordsFromTable(SEGMENTS_TABLE);
+////			connection.deleteFromTable(4, "Cars");
+//			connection.deleteSegments(3, "N101");
+//			connection.printRecordsFromTable(SEGMENTS_TABLE);
+//			connection.updateSegments(1, "E10", new String[] {"Freeway"}, new Object[] {"Balls"});
+//			connection.printRecordsFromTable(SEGMENTS_TABLE);
+		}
+		catch(Exception e) {
+			System.err.println("Error: " + e.getMessage());
+		}
+	}
 }

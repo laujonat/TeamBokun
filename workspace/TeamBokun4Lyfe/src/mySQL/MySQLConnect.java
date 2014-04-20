@@ -56,7 +56,7 @@ public class MySQLConnect {
 		}
 	}
 	
-	//	Return speed at hour of freeway
+	//	Return speed at hour of freewayy
 	
 	//	Print all records from a table
 	public void printRecordsFromTable(String table) throws SQLException {

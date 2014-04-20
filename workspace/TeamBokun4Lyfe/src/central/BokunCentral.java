@@ -30,6 +30,8 @@ public class BokunCentral {
 
 	public static void main(String[] args) {
 		BokunCentral bc = new BokunCentral();
-//		freeways.displayFreewayExits();
+		
+		for(int i = 0; i < jsonParser.getCars().size(); i++)
+			System.out.println(jsonParser.getCars().get(i).toString());
 	}
 }

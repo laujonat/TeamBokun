@@ -40,9 +40,8 @@ public class Car {
 		String string = "";
 		string += "ID: " + id + "\n";
 		string += "Speed: " + speed + "\n";
-//		string += "Direction: " + direction + "\n";
-//		string += "On/Off Ramp: " + onOffRamp + "\n";
-//		string += "Freeway: " + roadSegment.getFreewayName() + "\n";
+		string += "On/Off Ramp: " + roadSegment.getKey() + "\n";
+		string += "Freeway: " + roadSegment.getFreewayName() + "\n";
 		string += "Hour: " + hour + "\n";
 		
 		return string;

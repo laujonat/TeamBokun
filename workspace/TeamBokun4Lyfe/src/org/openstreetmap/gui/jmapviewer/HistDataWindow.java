@@ -33,21 +33,21 @@ public class HistDataWindow extends JFrame {
 		
 		super("Historical Data");
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-		setSize(1400, 700);
+		setSize(1400, 500);
 		
 		JPanel tablePanel = new JPanel() {
 			public Dimension getPreferredSize() {
 				return new Dimension(600,665);
 			}
 		};
-		//tablePanel.setBackground(Color.WHITE);
+		//tablePanel.setBackground(Color.BLUE);
 		
 		JPanel graphPanel = new JPanel() {
 			public Dimension getPreferredSize() {
-				return new Dimension(775, 665);
+				return new Dimension(670, 665);
 			}
 		};
-		graphPanel.setBackground(Color.WHITE);
+		//graphPanel.setBackground(Color.BLUE);
 		
 		
 		//TABLE
@@ -174,9 +174,17 @@ public class HistDataWindow extends JFrame {
 		dataset.addSeries(south405);
 		dataset.addSeries(north405);
 
+//		XYSeries series = new XYSeries("East 101");
+//		series.add(1,1);
+//		series.add(1,2);
+//		series.add(4,10);
+//		
+//		XYSeriesCollection dataset = new XYSeriesCollection();
+//		dataset.addSeries(series);
+		
 		// Generate the graph
 		JFreeChart chart = ChartFactory.createXYLineChart(
-				"XY Chart", // Title
+				"Average Speeds", // Title
 				"hours of the day", // x-axis Label
 				"average speed", // y-axis Label
 				dataset, // Dataset

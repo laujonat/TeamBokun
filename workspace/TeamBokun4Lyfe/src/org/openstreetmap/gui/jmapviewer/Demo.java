@@ -13,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,6 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
@@ -34,6 +37,9 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 //import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOpenAerialTileSource;
 //import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOsmTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+
+import central.BokunCentral;
+import central.PlotInfo;
 
 /**
  *
@@ -53,6 +59,11 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
 
     private JLabel mperpLabelName=null;
     private JLabel mperpLabelValue = null;
+    private JPanel helpPanel;
+    
+    private BokunCentral carData;
+    private ArrayList<PlotInfo> plotInfo;
+    private DrawCar car;
 
     /**
      * Constructs the {@code Demo}.
@@ -62,7 +73,26 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         setSize(400, 400);
 //        setBackground(new Color(10, 225, 215));
         treeMap = new JMapViewerTree("Zones");
-
+        carData = new BokunCentral();
+        
+        //	Wait until cars are populated
+        
+//        System.out.println(carData.allCars.size() + " THIS IS SIZE");
+        
+        while(BokunCentral.jsonParser.getCars().size() == 0)
+		{
+			System.out.print("");
+		}
+        
+        plotInfo = carData.aggregateCarLatLong();
+        
+        for(int i = 0; i < plotInfo.size(); i++)
+		{
+			System.out.println(plotInfo.get(i).getLatitude() + " " + plotInfo.get(i).getLongitude()
+					+ " " + plotInfo.get(i).getSpeed() + " " + plotInfo.get(i).getFwy());
+		}
+        
+//        System.out.println(carData.allCars.size() +  " is the size");
         // Listen to the map viewer for user operations so components will
         // recieve events and update
         map().addJMVListener(this);
@@ -78,7 +108,7 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         JPanel panel = new JPanel();
         JPanel panelTop = new JPanel();
         JPanel panelBottom = new JPanel();
-        JPanel helpPanel = new JPanel();
+        helpPanel = new JPanel();
 
         mperpLabelName=new JLabel("Meters/Pixels: ");
         mperpLabelValue=new JLabel(String.format("%s",map().getMeterPerPixel()));
@@ -87,14 +117,16 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         zoomValue=new JLabel(String.format("%s", map().getZoom()));
 
         add(panel, BorderLayout.NORTH);
-        add(helpPanel, BorderLayout.SOUTH);
+//        add(helpPanel, BorderLayout.WEST);
         panel.setLayout(new BorderLayout());
-        panel.add(panelTop, BorderLayout.NORTH);
-        panel.add(panelBottom, BorderLayout.SOUTH);
+        panel.add(panelTop, BorderLayout.WEST);
+        panel.add(panelBottom, BorderLayout.EAST);
         JLabel helpLabel = new JLabel("Use right mouse button to move,\n "
                 + "left double click or mouse wheel to zoom.");
         helpPanel.add(helpLabel);
-        JButton button = new JButton("Snap to LA");
+//        helpPanel.setVisible(false);
+        panel.add(helpPanel, BorderLayout.SOUTH);
+        JButton button = new JButton("FOCUS");
         button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -130,7 +162,7 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         destinationTextField.setColumns(30);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK);
-    	final JTextArea jta = new JTextArea("Fastest Route: \n" + "\n" + "Time at Speed Limit: \n" + "\n" +  "Time at Current Speed (of traffic): \n" + "\n", 6, 30);
+    	final JTextArea jta = new JTextArea("Fastest Route: \n" + "\n" + "Time at Speed Limit: \n" + "\n" +  "Time at Current Speed (of traffic): \n" + "\n", 6, 10);
     	jta.setBorder(border);
     	jta.setEditable(false);
     	jta.setVisible(false);
@@ -140,14 +172,17 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
             public void actionPerformed(ActionEvent e)
             {
             	jta.setVisible(true);
+            	helpPanel.setVisible(false);
             }
         }); 
     	
-        panelTop.add(startingPointTextField);
-        panelTop.add(destinationTextField);
+        panelBottom.add(startingPointTextField);
+        panelBottom.add(destinationTextField);
+        panelBottom.add(button);
+        panel.add(panelBottom, BorderLayout.NORTH);
         //panelTop.add(tileSourceSelector);
        // panelTop.add(tileLoaderSelector);
-        panel.add(jta);
+//        panelBottom.add(jta);
 
         
         
@@ -170,6 +205,7 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         panelBottom.add(showMapMarker);
         ///
         final JCheckBox showTreeLayers = new JCheckBox("Tree Layers visible");
+        showTreeLayers.setVisible(false);
         showTreeLayers.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 treeMap.setTreeVisible(showTreeLayers.isSelected());
@@ -178,6 +214,8 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         panelBottom.add(showTreeLayers);
         ///
         final JCheckBox showToolTip = new JCheckBox("ToolTip visible");
+        showToolTip.setSelected(true);
+        showToolTip.setVisible(false);
         showToolTip.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 map().setToolTipText(null);
@@ -200,6 +238,19 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
                 map().setZoomContolsVisible(showZoomControls.isSelected());
             }
         });
+        JButton histData = new JButton("Historical Data");
+        histData.addActionListener(new ActionListener() {
+ 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+            	HistDataWindow hi = new HistDataWindow();
+            }
+        });
+        
+        JButton exportData = new JButton("Export Data");
+        panelTop.add(histData);
+        panelTop.add(exportData);
 //        panelBottom.add(showZoomControls);
 //        final JCheckBox scrollWrapEnabled = new JCheckBox("Scrollwrap enabled");
 //        scrollWrapEnabled.addActionListener(new ActionListener() {
@@ -208,52 +259,35 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
 //            }
 //        });
 //        panelBottom.add(scrollWrapEnabled);
-        panelBottom.add(button);
-
-        panelTop.add(zoomLabel);
-        panelTop.add(zoomValue);
-        panelTop.add(mperpLabelName);
-        panelTop.add(mperpLabelValue);
-
+//        panelBottom.add(button);
+        
+//        panelTop.add(zoomLabel);
+//        panelTop.add(zoomValue);
+//        panelTop.add(mperpLabelName);
+//        panelTop.add(mperpLabelValue);
+//        panelTop.add(zoomLabel);
+//        panelTop.add(zoomValue);
+//        panelTop.add(mperpLabelName);
+//        panelTop.add(mperpLabelValue);
+        
         add(treeMap, BorderLayout.CENTER);
-
+        add(jta, BorderLayout.SOUTH);
+//        helpPanel.setVisible(true);
+//        panelBottom.add(button);
+//        panelBottom.add(button, BorderLayout.LINE_END);
         /*
          * This is where the marking starts
          * WE should change the coordinates
          */
-        LayerGroup germanyGroup = new LayerGroup("Germany");
-        Layer germanyWestLayer = germanyGroup.addLayer("Germany West");
-        Layer germanyEastLayer = germanyGroup.addLayer("Germany East");
-        MapMarkerDot eberstadt = new MapMarkerDot(germanyEastLayer, "Eberstadt", 49.814284999, 8.642065999);
-        MapMarkerDot ebersheim = new MapMarkerDot(germanyWestLayer, "Ebersheim", 49.91, 8.24);
-        MapMarkerDot empty = new MapMarkerDot(germanyEastLayer, 49.71, 8.64);
-        MapMarkerDot darmstadt = new MapMarkerDot(germanyEastLayer, "Darmstadt", 49.8588, 8.643);
-        map().addMapMarker(eberstadt);
-        map().addMapMarker(ebersheim);
-        map().addMapMarker(empty);
-        Layer franceLayer = treeMap.addLayer("France");
-        map().addMapMarker(new MapMarkerDot(franceLayer, "La Gallerie", 48.71, -1));
-        map().addMapMarker(new MapMarkerDot(43.604, 1.444));
-        map().addMapMarker(new MapMarkerCircle(53.343, -6.267, 0.666));
-//        map().addMapRectangle(new MapRectangleImpl(new Coordinate(53.343, -6.267), new Coordinate(43.604, 1.444)));
-        map().addMapMarker(darmstadt);
-        treeMap.addLayer(germanyWestLayer);
-        treeMap.addLayer(germanyEastLayer);
 
-        MapPolygon bermudas = new MapPolygonImpl(c(49,1), c(45,10), c(40,5));
-        map().addMapPolygon( bermudas );
-        map().addMapPolygon( new MapPolygonImpl(germanyEastLayer, "Riedstadt", ebersheim, darmstadt, eberstadt, empty));
-
-        map().addMapMarker(new MapMarkerCircle(germanyWestLayer, "North of Suisse", new Coordinate(48, 7), .5));
-        Layer spain = treeMap.addLayer("Spain");
-        map().addMapMarker(new MapMarkerCircle(spain, "La Garena", new Coordinate(40.4838, -3.39), .002));
-        spain.setVisible(false);
-
-        Layer wales = treeMap.addLayer("UK");
-        map().addMapRectangle(new MapRectangleImpl(wales, "Wales", c(53.35,-4.57), c(51.64,-2.63)));
-
-        // map.setDisplayPositionByLatLon(49.807, 8.6, 11);
-        // map.setTileGridVisible(true);
+        
+        car = new DrawCar(map(), 33.97403, -118.38212);
+        car.start();
+        /*
+         * for loop
+         * loop through array list of draw cars
+         * inside loop, add map marker
+         */
 
         map().addMouseListener(new MouseAdapter() {
             @Override
@@ -292,6 +326,32 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         // java.util.Properties systemProperties = System.getProperties();
         // systemProperties.setProperty("http.proxyHost", "localhost");
         // systemProperties.setProperty("http.proxyPort", "8008");
+//        new Demo().setVisible(true);
+        try
+		{
+	        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+	    } 
+	    
+		catch (UnsupportedLookAndFeelException e)
+	    {
+	       // handle exception
+	    }
+	   
+		catch (ClassNotFoundException e)
+		{
+	       // handle exception
+	    }
+	    
+		catch (InstantiationException e)
+		{
+	       // handle exception
+	    }
+	    
+		catch (IllegalAccessException e)
+		{
+	       // handle exception
+	    }
+    	
         new Demo().setVisible(true);
     }
 

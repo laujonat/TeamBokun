@@ -4,6 +4,8 @@ package org.openstreetmap.gui.jmapviewer;
 
 import java.awt.Color;
 
+import javax.swing.Timer;
+
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
@@ -21,6 +23,11 @@ public class MapMarkerDot extends MapMarkerCircle {
     public MapMarkerDot(Coordinate coord) {
         this(null, null, coord);
     }
+    
+    public MapMarkerDot(double lat, double lon) {
+        this(null, null, lat, lon);
+    }
+    
     public MapMarkerDot(String name, Coordinate coord) {
         this(null, name, coord);
     }
@@ -34,9 +41,7 @@ public class MapMarkerDot extends MapMarkerCircle {
         this(null, null, lat, lon);
         setColor(color);
     }
-    public MapMarkerDot(double lat, double lon) {
-        this(null, null, lat, lon);
-    }
+
     public MapMarkerDot(Layer layer, double lat, double lon) {
         this(layer, null, lat, lon);
     }
@@ -48,6 +53,6 @@ public class MapMarkerDot extends MapMarkerCircle {
     }
 
     public static Style getDefaultStyle(){
-        return new Style(Color.BLACK, Color.YELLOW, null, getDefaultFont());
+        return new Style(Color.BLACK, Color.BLUE, null, getDefaultFont());
     }
 }

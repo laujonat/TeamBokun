@@ -9,6 +9,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import javax.swing.Timer;
+
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 /**
@@ -39,9 +41,11 @@ public class MapMarkerCircle extends MapObjectImpl implements MapMarker {
     }
     public MapMarkerCircle(Layer layer, double lat, double lon, double radius) {
         this(layer, null, new Coordinate(lat,lon), radius);
+//        System.out.println("NOW NOW NOW");
     }
     public MapMarkerCircle(Layer layer, String name, Coordinate coord, double radius) {
         this(layer, name, coord, radius, STYLE.VARIABLE, getDefaultStyle());
+//        System.out.println("HERE HERE HER");
     }
     public MapMarkerCircle(Layer layer, String name, Coordinate coord, double radius, STYLE markerStyle, Style style) {
         super(layer, name, style);
@@ -72,7 +76,6 @@ public class MapMarkerCircle extends MapObjectImpl implements MapMarker {
     public void paint(Graphics g, Point position, int radio) {
         int size_h = radio;
         int size = size_h * 2;
-
         if (g instanceof Graphics2D && getBackColor()!=null) {
             Graphics2D g2 = (Graphics2D) g;
             Composite oldComposite = g2.getComposite();
@@ -86,6 +89,7 @@ public class MapMarkerCircle extends MapObjectImpl implements MapMarker {
 
         if(getLayer()==null||getLayer().isVisibleTexts()) paintText(g, position);
     }
+    
 
     public static Style getDefaultStyle(){
         return new Style(Color.ORANGE, new Color(200,200,200,200), null, getDefaultFont());

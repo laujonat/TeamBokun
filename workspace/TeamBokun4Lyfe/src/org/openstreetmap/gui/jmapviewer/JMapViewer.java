@@ -2,6 +2,7 @@ package org.openstreetmap.gui.jmapviewer;
 
 //License: GPL. Copyright 2008 by Jan Peter Stotz
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -51,8 +53,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      */
     protected static final Point[] move = { new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1) };
 
-    public static final int MAX_ZOOM = 22;
-    public static final int MIN_ZOOM = 0;
+    public static final int MAX_ZOOM = 17;
+    public static final int MIN_ZOOM = 11;
 
     protected List<MapMarker> mapMarkerList;
     protected List<MapRectangle> mapRectangleList;
@@ -604,6 +606,50 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
                 iMove = (iMove + 1) % move.length;
             }
         }
+        
+       
+
+        
+        JButton testButton = new JButton();
+        testButton.setBackground(Color.RED);
+        testButton.setOpaque(true);
+        testButton.setBounds(1350, 510, 15, 30);
+        testButton.setToolTipText("80+ mph");
+        add(testButton);
+        
+        JButton testButton1 = new JButton();
+        testButton1.setBackground(Color.ORANGE);
+        testButton1.setOpaque(true);
+        testButton1.setBounds(1350, 540, 15, 30);
+        testButton1.setToolTipText("61-80 mph");
+        add(testButton1);
+        
+        JButton testButton2 = new JButton();
+        testButton2.setBackground(Color.YELLOW);
+        testButton2.setOpaque(true);
+        testButton2.setBounds(1350, 570, 15, 30);
+        testButton2.setToolTipText("41-60 mph");
+        add(testButton2);
+        
+        JButton testButton3 = new JButton();
+        testButton3.setBackground(Color.GREEN);
+        testButton3.setOpaque(true);
+        testButton3.setBounds(1350, 600, 15, 30);
+        testButton3.setToolTipText("21-40 mph");
+        add(testButton3);
+        
+        JButton testButton4 = new JButton();
+        testButton4.setBackground(Color.WHITE);
+        testButton4.setOpaque(true);
+        testButton4.setBounds(1350, 630, 15, 30);
+        testButton4.setToolTipText("0-20 mph");
+        add(testButton4);
+        
+        JButton legend = new JButton("LEGEND");
+        legend.setOpaque(false);
+        legend.setBounds(1310, 670, 100, 15);
+        add(legend);
+        
         // outer border of the map
         int mapSize = tilesize << zoom;
         if (scrollWrapEnabled) {

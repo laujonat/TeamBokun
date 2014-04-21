@@ -7,21 +7,18 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.SQLException;
 
 public class DirectionsJsonParser {
 	int[] timeToDest;		//	timeToDest[0] = minutes		timeToDest[1] = hours
 	double[] originCoord;
 	double[] destCoord;
 	double distance;
-	String instructions;
 	
 	public DirectionsJsonParser() {
 		timeToDest = new int[2];
 		originCoord = new double[2];
 		destCoord = new double[2];
 		distance = 0;
-		instructions = "";
 	}
 	
 	@Override
@@ -29,7 +26,7 @@ public class DirectionsJsonParser {
 		String line = "Starting point: (" + originCoord[0] + ", " + originCoord[1] + ")\n";
 		line += "Ending point: (" + destCoord[0] + ", " + destCoord[1] + ")\n";
 		line += "Distance: " + distance + " miles\n";
-		line += "Time to destination: " + timeToDest[1] + " hours and " + timeToDest[0] + " minutes";
+		line += "Time to destination: " + timeToDest[1] + " hours and " + timeToDest[0] + " minutes\n";
 		
 		return line;
 	}
@@ -70,6 +67,7 @@ public class DirectionsJsonParser {
 	
 	//	Manually parses JSON file for necessary information
 	private void parseManually(String json) {
+		System.out.println(json);
 		boolean distanceFound = false, durationFound = false, endPointFound = false;
 		boolean startPointFound = false;
 		
@@ -158,9 +156,6 @@ public class DirectionsJsonParser {
 
 	public double getDistance() { return distance; }
 	public void setDistance(double distance) { this.distance = distance; }
-
-	public String getInstructions() { return instructions; }
-	public void setInstructions(String instructions) { this.instructions = instructions; }
 
 	public static void main(String[] args) {
 		DirectionsJsonParser yay = new DirectionsJsonParser();

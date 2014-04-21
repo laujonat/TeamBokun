@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class MySQLConnect {
 	private final String USERNAME 			= "root";
 	private final String PASSWORD 			= "";
-	private final String DATABASE 			= "CS201";
+	private final String DATABASE 			= "CS201DB";
 	private final String TABLE 				= "AverageSpeeds";
 	
 	private Connection connect				= null;
@@ -56,7 +56,7 @@ public class MySQLConnect {
 		}
 	}
 	
-	//	Return speed at hour of freewayy
+	//	Return speed at hour of freeway
 	
 	//	Print all records from a table
 	public void printRecordsFromTable(String table) throws SQLException {
@@ -207,7 +207,7 @@ public class MySQLConnect {
 	
 	//	Update records in table
 	public void updateTable(int hour, String[] freeways, double[] speeds) throws SQLException {
-		System.out.println("\nUpdating table " + TABLE + "...");
+//		System.out.println("\nUpdating table " + TABLE + "...");
 		
 		//	Small error check
 		if(freeways.length != speeds.length)
@@ -233,10 +233,11 @@ public class MySQLConnect {
 			}
 			prepStatement.setInt(i, hour);
 			
-			if(prepStatement.executeUpdate() == 0)
-				System.out.println("Update in table " + TABLE + " failed...");
-			else
-				System.out.println("Update in table " + TABLE + " succesful!");
+			prepStatement.executeUpdate();
+//			if(prepStatement.executeUpdate() == 0)
+//				System.out.println("Update in table " + TABLE + " failed...");
+//			else
+//				System.out.println("Update in table " + TABLE + " successful!");
 		}
 		catch(SQLException e) { throw e; }
 		finally {
@@ -294,25 +295,25 @@ public class MySQLConnect {
 //		}
 //	}
 	
-	public static void main(String[] args) {
-		try {
-			MySQLConnect connection = new MySQLConnect();
-			
-//			connection.printRecordsFromTable(connection.TABLE);
-//			connection.updateTable(14, new String[] {"S101Speed", "N405Speed"}, new double[] {3, 5});
-//			connection.printRecordsFromTable(connection.TABLE);
-//			connection.insertIntoTable(new String[] {"ID", "Freeway", "OnOffRamp", "Long1", "Lat1", "Long2", "Lat2", "MinSpeed"},
-//									   new Object[] {3, "N101", "Exit 12", 1.0, 2.0, 3.0, 4.0, 45.0},
-//									   SEGMENTS_TABLE);
-//			connection.printRecordsFromTable(SEGMENTS_TABLE);
-////			connection.deleteFromTable(4, "Cars");
-//			connection.deleteSegments(3, "N101");
-//			connection.printRecordsFromTable(SEGMENTS_TABLE);
-//			connection.updateSegments(1, "E10", new String[] {"Freeway"}, new Object[] {"Balls"});
-//			connection.printRecordsFromTable(SEGMENTS_TABLE);
-		}
-		catch(Exception e) {
-			System.err.println("Error: " + e.getMessage());
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			MySQLConnect connection = new MySQLConnect();
+//			
+////			connection.printRecordsFromTable(connection.TABLE);
+////			connection.updateTable(14, new String[] {"S101Speed", "N405Speed"}, new double[] {3, 5});
+////			connection.printRecordsFromTable(connection.TABLE);
+////			connection.insertIntoTable(new String[] {"ID", "Freeway", "OnOffRamp", "Long1", "Lat1", "Long2", "Lat2", "MinSpeed"},
+////									   new Object[] {3, "N101", "Exit 12", 1.0, 2.0, 3.0, 4.0, 45.0},
+////									   SEGMENTS_TABLE);
+////			connection.printRecordsFromTable(SEGMENTS_TABLE);
+//////			connection.deleteFromTable(4, "Cars");
+////			connection.deleteSegments(3, "N101");
+////			connection.printRecordsFromTable(SEGMENTS_TABLE);
+////			connection.updateSegments(1, "E10", new String[] {"Freeway"}, new Object[] {"Balls"});
+////			connection.printRecordsFromTable(SEGMENTS_TABLE);
+//		}
+//		catch(Exception e) {
+//			System.err.println("Error: " + e.getMessage());
+//		}
+//	}
 }

@@ -15,11 +15,10 @@ public class RoadSegment
 		setKey(key);
 		this.ID = ID;
 		this.freeway = freeway;
-		
 		coordinates = new double[2];
 //		endRampCoordinates = new double[2];
 		
-		minSpeed = 0;
+		minSpeed = (double)9001;
 	}
 	
 	public RoadSegment(RoadSegment rs) {
@@ -57,6 +56,19 @@ public class RoadSegment
 	public void setFreeway(Freeway f)
 	{
 		freeway = f;
+	}
+	
+	public void resetMinSpeedTO_OVER_9000()
+	{
+		setMinSpeed((double)9001);
+	}
+	
+	public void checkMinSpeed(double speed)
+	{
+		if(speed < getMinSpeed())
+		{
+			setMinSpeed(speed);
+		}
 	}
 	
 	@Override

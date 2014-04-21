@@ -22,7 +22,7 @@ public class Car {
 		this.longitude = rs.getY();
 		Calendar time = Calendar.getInstance();
 		hour = time.get(Calendar.HOUR_OF_DAY);
-		
+		rs.checkMinSpeed(this.speed);
 		freeway.checkTheHour(hour, speed);
 		
 	}
@@ -38,7 +38,15 @@ public class Car {
 	public void setFreeway(Freeway freeway) { this.freeway = freeway; }
 	
 	public RoadSegment getRoadSeg() { return roadSegment; }
-	public void setRoadSeg(RoadSegment rs) { roadSegment = rs; }
+	public void setRoadSeg(RoadSegment rs)
+	{ 
+		if(this.speed == rs.getMinSpeed())
+		{
+			rs.resetMinSpeedTO_OVER_9000();
+		}
+		roadSegment = rs; 
+		rs.checkMinSpeed(this.speed);
+	}
 	
 	public int getHour() { return hour; }
 	// no setter for time as each car is only accounted for at 1 instance of time

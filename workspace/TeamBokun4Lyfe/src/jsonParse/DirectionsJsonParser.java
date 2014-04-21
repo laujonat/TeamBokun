@@ -9,13 +9,16 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class DirectionsJsonParser {
-	int[] timeToDest;		//	timeToDest[0] = minutes		timeToDest[1] = hours
+	int[] timeToDestAtCurrTraffic;		//	timeToDest[0] = minutes		timeToDest[1] = hours
+	int[] timeToDestAtSpeedLimit;		
+	
 	double[] originCoord;
 	double[] destCoord;
 	double distance;
 	
 	public DirectionsJsonParser() {
-		timeToDest = new int[2];
+		timeToDestAtCurrTraffic = new int[2];
+		timeToDestAtSpeedLimit = new int[2];
 		originCoord = new double[2];
 		destCoord = new double[2];
 		distance = 0;
@@ -26,7 +29,8 @@ public class DirectionsJsonParser {
 		String line = "Starting point: (" + originCoord[0] + ", " + originCoord[1] + ")\n";
 		line += "Ending point: (" + destCoord[0] + ", " + destCoord[1] + ")\n";
 		line += "Distance: " + distance + " miles\n";
-		line += "Time to destination: " + timeToDest[1] + " hours and " + timeToDest[0] + " minutes\n";
+		line += "Time to destination at current traffic conditions: " + timeToDestAtCurrTraffic[1] + " hours and " + timeToDestAtCurrTraffic[0] + " minutes\n";
+		line += "Time to destination at speed limit: " + timeToDestAtSpeedLimit[1] + " hours and " + timeToDestAtSpeedLimit[0] + " minutes\n";
 		
 		return line;
 	}
@@ -67,7 +71,6 @@ public class DirectionsJsonParser {
 	
 	//	Manually parses JSON file for necessary information
 	private void parseManually(String json) {
-		System.out.println(json);
 		boolean distanceFound = false, durationFound = false, endPointFound = false;
 		boolean startPointFound = false;
 		
@@ -94,16 +97,16 @@ public class DirectionsJsonParser {
 				if(time.contains("hours")) {
 					j = 0;
 					while(time.substring(j, j+1).matches("[0-9]")) { j++; }
-					timeToDest[1] = Integer.parseInt(time.substring(0, j));
+					timeToDestAtCurrTraffic[1] = Integer.parseInt(time.substring(0, j));
 					
 					time = time.substring(j + 5);	//	Cut off hours
 				}
 				else
-					timeToDest[1] = 0;
+					timeToDestAtCurrTraffic[1] = 0;
 				
 				//	Get minutes
 				for(j = 0; time.substring(j, j+1).matches("[0-9]"); j++) {}
-				timeToDest[0] = Integer.parseInt(time.substring(0, j));
+				timeToDestAtCurrTraffic[0] = Integer.parseInt(time.substring(0, j));
 			}
 			
 			//	Search for end location
@@ -142,24 +145,30 @@ public class DirectionsJsonParser {
 				originCoord[1] = Double.parseDouble(json.substring(i, j));
 			}
 		}
+		
+		//	Set timeToDestAtSpeedLimit
+		double time = distance/65;	//	Assume speed limit is 65 mph
+		time *= 60;	//	Convert to minutes
+		if(time > 60) {
+			timeToDestAtSpeedLimit[0] = (int) (time % 60);
+			timeToDestAtSpeedLimit[1] = (int)Math.round(time/60);
+		}
 	}
 	
-	//	GETTERS AND SETTERS
-	public int[] getTimeToDest() { return timeToDest; }
-	public void setTimeToDest(int[] timeToDest) { this.timeToDest = timeToDest; }
+	//	GETTERS
+	public int[] gettimeToDestAtCurrTraffic() { return timeToDestAtCurrTraffic; }
+	
+	public int[] timeToDestAtSpeedLimit() { return timeToDestAtSpeedLimit; }
 
 	public double[] getOriginCoord() { return originCoord; }
-	public void setOriginCoord(double[] originCoord) { this.originCoord = originCoord; }
 
 	public double[] getDestCoord() { return destCoord; }
-	public void setDestCoord(double[] destCoord) { this.destCoord = destCoord; }
 
 	public double getDistance() { return distance; }
-	public void setDistance(double distance) { this.distance = distance; }
 
-	public static void main(String[] args) {
-		DirectionsJsonParser yay = new DirectionsJsonParser();
-		yay.requestDirections("15371 karl avenue, monte sereno", "3131 mcclintock street, los angeles");
-		System.out.println(yay.toString());
-	}
+//	public static void main(String[] args) {
+//		DirectionsJsonParser yay = new DirectionsJsonParser();
+//		yay.requestDirections("15371 karl avenue, monte sereno", "3131 mcclintock street, los angeles");
+//		System.out.println(yay.toString());
+//	}
 }

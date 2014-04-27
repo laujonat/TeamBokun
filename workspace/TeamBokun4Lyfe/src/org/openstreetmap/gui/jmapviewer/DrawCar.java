@@ -23,19 +23,14 @@ public class DrawCar extends Thread implements ActionListener{
 	private double newX, newY;
 	private int zoomLevel;
 	private double slope;
-	public static final int MAX_ZOOM = 17;
-    public static final int MIN_ZOOM = 11;
-    public static final double MAX_LAT = 85.05112877980659;
-    public static final double MIN_LAT = -85.05112877980659;
+	private List markers = null;
     private static int TILE_SIZE = 256;
-    private List markers;
     public boolean flag;
     
     
     private double incrementX;
     private double incrementY;
     private double convert;
-    private int numSegments;
     
     double factor = 1e5;
   
@@ -48,10 +43,10 @@ public class DrawCar extends Thread implements ActionListener{
 		currX = roundEndX;
 		currY = roundEndY;
 		this.car = car;
-		this.numSegments = car.getFreewayObj().getNumRoadSeg();
+//		this.numSegments = car.getFreewayObj().getNumRoadSeg();
 		markers = treeMap.getMapMarkerList();
 		flag = false;
-		timer = new Timer(5, this);
+		timer = new Timer(1, this);
 	}
 	
 	// This function converts decimal degrees to radians
@@ -75,7 +70,6 @@ public class DrawCar extends Thread implements ActionListener{
 	public void destination(double newX, double newY) {
 		this.newX = newX;
 		this.newY = newY;	
-		numSegments--;
 	}
 	
 	@Override
@@ -85,21 +79,30 @@ public class DrawCar extends Thread implements ActionListener{
 
 		double calcDistance = distance(currX, currY, newX, newY);
 		
-		double roundDistance = Math.round(calcDistance * factor)/factor;
+//		double roundDistance = Math.round(calcDistance * factor)/factor;
+		double roundDistance = calcDistance;
 //    	System.out.println("THIS IS DISTANCE " + roundDistance);
 
-    	double roundSpeed = Math.round(car.getSpeed() * factor)/factor;
+//    	double roundSpeed = Math.round(car.getSpeed() * factor)/factor;
+		double roundSpeed = car.getSpeed();
     	
-    	double time = Math.round((roundDistance/roundSpeed) * factor)/factor; // minutes
+//    	double time = Math.round((roundDistance/roundSpeed) * factor)/factor; // minutes
+		double time = roundDistance/roundSpeed;
     	
-    	double convertToMili =  Math.round((time * 60000) * factor)/factor; // milli
+//    	double convertToMili =  Math.round((time * 60000) * factor)/factor; // milli
+		double convertToMili = time*60000;
 	
-    	convert = Math.round((convertToMili/5) * factor) / factor;
-    	double yDistance = (Math.round((currY - newY) * factor) / factor);
-		double xDistance = (Math.round((currX - newX) * factor) / factor);
+//    	convert = Math.round((convertToMili/5) * factor) / factor;
+		convert = convertToMili/5;
+//    	double yDistance = (Math.round((currY - newY) * factor) / factor);
+//		double xDistance = (Math.round((currX - newX) * factor) / factor);
+    	double yDistance = currY - newY;
+    	double xDistance = currX - newX;
 		
-		incrementY = (Math.round((yDistance/convert) * factor) / factor); 
-		incrementX = (Math.round((xDistance/convert) * factor) / factor); 
+//		incrementY = (Math.round((yDistance/convert) * factor) / factor); 
+//		incrementX = (Math.round((xDistance/convert) * factor) / factor); 
+    	incrementY = yDistance/convert;
+    	incrementX = xDistance/convert;
 //    	System.out.println("THIS IS CONVERTED " + convert);
 		timer.start();
 	}
@@ -118,25 +121,40 @@ public class DrawCar extends Thread implements ActionListener{
 		for(int k = 0; k < markers.size(); k++) {
 			carMarker = (MapMarkerDot) markers.get(k);
 			treeMap.removeMapMarker(carMarker);
+//			System.out.println("HERE");
 		}
-//		if(newX == currX && newY == currY) {
-//			
-////				if(carMarker.getLat() == currX && carMarker.getLon() == currY) {
-//					  
-////					setX(newX);
-////					setY(newY);
-//					RoadSegment nextSeg = car.getFreewayObj().getNextRoadSeg(car.getRoadSeg());
-//					car.setRoadSeg(nextSeg);
-//					destination(nextSeg.getX(), nextSeg.getY());
-//					
-//					timer.stop();
-//					run();
-//					return;
-////					break;                                              
-//////	           }
-////			}
-////			timer.stop();
-//		} 
+		
+		double testCurrX = currX+0.01;
+		double testCurrY = currY+0.01;
+		double testCurrXM = currX-0.01;
+		double testCurrYM = currY-0.01;
+//		if(newX == testCurrX && newY == testCurrY) {
+			
+		if((newX >= testCurrXM && newX <= testCurrX) && (newY >= testCurrYM && newY <= testCurrY)) {
+			
+			System.out.println("HERE");
+//				if(carMarker.getLat() == currX && carMarker.getLon() == currY) {
+					  
+//					setX(newX);
+//					setY(newY);
+					RoadSegment nextSeg = car.getFreewayObj().getNextRoadSeg(car.getRoadSeg());
+					if(nextSeg != null) {
+						car.setRoadSeg(nextSeg);
+						destination(nextSeg.getX(), nextSeg.getY());
+						timer.stop();
+						run();
+						return;
+					} else {
+						timer.stop();
+					}
+					
+					
+					
+//					break;                                              
+////	           }
+//			}
+//			timer.stop();
+		} 
 		
 		
 		
@@ -152,12 +170,11 @@ public class DrawCar extends Thread implements ActionListener{
 //		treeMap.removeAllMapMarkers();
 //		currY -= incrementY;
 //		currX -= incrementX;
-		double roundY = Math.round((currY) * factor) / factor;
-		double roundX = Math.round((currX) * factor) / factor;
+//		double roundY = Math.round((currY) * factor) / factor;
+//		double roundX = Math.round((currX) * factor) / factor;
+		double roundY = currY;
+		double roundX = currX;
 		treeMap.addMapMarker(new MapMarkerDot(currX, currY));
-		
-		
-
 		
 	}
 	

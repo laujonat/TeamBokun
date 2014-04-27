@@ -51,6 +51,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 import central.BokunCentral;
 import central.PlotInfo;
 import data.Car;
+import data.ConstructFreeways;
 import data.Freeway;
 import data.RoadSegment;
 import jsonParse.DirectionsJsonParser;
@@ -79,6 +80,7 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     private ArrayList<PlotInfo> plotInfo;
     private ArrayList<DrawCar> carList;
     private DrawCar car = null;
+    private DrawCar car2 = null;
     private Car carObj;
     
     String startStr = "";
@@ -101,59 +103,96 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         setSize(400, 400);
 //        setBackground(new Color(10, 225, 215));
         treeMap = new JMapViewerTree("Zones");
-        carData = new BokunCentral();
+//        carData = new BokunCentral();
         
         //	Wait until cars are populated
-        while(!BokunCentral.jsonParser.isUpdated()) { System.out.print(""); }
+//        while(!BokunCentral.jsonParser.isUpdated()) { System.out.print(""); }
 
         map().addJMVListener(this);
         map().setDisplayPositionByLatLon(34.035, -118.238, 11);
-        ArrayList<Car> allCars = BokunCentral.jsonParser.getCars();
+        
+        
+//        ArrayList<Car> allCars = BokunCentral.jsonParser.getCars();
         ArrayList<DrawCar> carList = new ArrayList<DrawCar>();
         
         end = new MapMarkerCircle(0, 0, 0);
         start = new MapMarkerCircle(0, 0, 0);
         
-        for(int i = 0; i < 20; ++i) {
-        	double factor = 1e5;
-//        	double startX = allCars.get(i).getLatitude();
-//        	double startY = allCars.get(i).getLongitude();
-        	
-        	double roundEndX = Math.round((allCars.get(i).getLatitude()) * factor) / factor;
-        	double roundEndY = Math.round((allCars.get(i).getLongitude()) * factor) / factor;
-        	
-        	car = new DrawCar(map(), roundEndX, roundEndY, allCars.get(i));
-//        	car.start();
-        	carList.add(car);   	
-        }
+        ConstructFreeways construct = new ConstructFreeways();
+//        Car testCar = new Car(2, 34, construct.E10, construct.E10.getRoadSegAt(2));
+        Car testCar = new Car(2, 60, construct.E10, construct.E10.getRoadSegAt(2));
         
-        for(int i = 0; i < 20; ++i) {
-//        	carList.get(i).start();
-        	double factor = 1e5;
-//        	double endX = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX();
-//        	double endY = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY();
-        	try {
-        		Car c = allCars.get(i);
-        		Freeway f = c.getFreewayObj();
-        		RoadSegment rs = f.getNextRoadSeg(c.getRoadSeg());
-        		if(rs == null) {
-        			continue;
-        		}
-        		double roundEndX = Math.round(rs.getX() * factor) / factor;
-        		double roundEndY = Math.round(rs.getY() * factor) / factor;
-//        		double roundEndX = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX()) * factor) / factor;
+        
+        
+        
+//        for(int i = 0; i < 20; ++i) {
+//        	double factor = 1e5;
+////        	double startX = allCars.get(i).getLatitude();
+////        	double startY = allCars.get(i).getLongitude();
+//        	
+//        	double roundEndX = Math.round((allCars.get(2).getLatitude()) * factor) / factor;
+//        	double roundEndY = Math.round((allCars.get(2).getLongitude()) * factor) / factor;
+//        	double roundEndX = Math.round((testCar.getLatitude()) * factor) / factor;
+//        	double roundEndY = Math.round((testCar.getLongitude()) * factor) / factor;
+        	double roundEndX = testCar.getLatitude();
+        	double roundEndY = testCar.getLongitude();
+//        	double roundEndXX = testCar2.getLatitude();
+//        	double roundEndYY = testCar2.getLongitude();
         	
-//	        	double roundEndY = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY()) * factor) / factor;
+//        	car = new DrawCar(map(), roundEndX, roundEndY, allCars.get(2));
+        	car = new DrawCar(map(), roundEndX, roundEndY, testCar);
+//        	car2 = new DrawCar(map(), roundEndXX, roundEndYY, testCar2);
+        	
+////        	car.start();
+//        	carList.add(car);   	
+//        }
+        
+//        for(int i = 0; i < 20; ++i) {
+////        	carList.get(i).start();
+//        	double factor = 1e5;
+//        	double endX = allCars.get(2).getFreewayObj().getNextRoadSeg(allCars.get(2).getRoadSeg()).getX();
+//        	double endY = allCars.get(2).getFreewayObj().getNextRoadSeg(allCars.get(2).getRoadSeg()).getY();
+        	double endX = testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getX();
+        	double endY = testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getY();
+//        	double endXX = testCar2.getFreewayObj().getNextRoadSeg(testCar2.getRoadSeg()).getX();
+//        	double endYY = testCar2.getFreewayObj().getNextRoadSeg(testCar2.getRoadSeg()).getY();
+        	try {
+//        		Car c = allCars.get(2);
+        		Car c = testCar;
+//        		Car c2 = testCar2;
+        		Freeway f = c.getFreewayObj();
+//        		Freeway ff = c2.getFreewayObj();
+        		RoadSegment rs = f.getNextRoadSeg(c.getRoadSeg());
+//        		RoadSegment rs2 = f.getNextRoadSeg(c2.getRoadSeg());
+        		if(rs == null) {
+//        			continue;
+        			System.out.println("ROADSEGMENT HIT NULL!");
+        		}
+//        		double roundEndX = Math.round(rs.getX() * factor) / factor;
+//        		double roundEndY = Math.round(rs.getY() * factor) / factor;
+//        		double roundEndX2 = Math.round((allCars.get(2).getFreewayObj().getNextRoadSeg(allCars.get(2).getRoadSeg()).getX()) * factor) / factor;
+//	        	double roundEndY2 = Math.round((allCars.get(2).getFreewayObj().getNextRoadSeg(allCars.get(2).getRoadSeg()).getY()) * factor) / factor;
+//        		double roundEndX2 = Math.round((testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getX()) * factor) / factor;
+//	        	double roundEndY2 = Math.round((testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getY()) * factor) / factor;
+        		double roundEndX2 = testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getX();
+        		double roundEndY2 = testCar.getFreewayObj().getNextRoadSeg(testCar.getRoadSeg()).getY();
+//        		double roundEndXX2 = testCar2.getFreewayObj().getNextRoadSeg(testCar2.getRoadSeg()).getX();
+//        		double roundEndYY2 = testCar2.getFreewayObj().getNextRoadSeg(testCar2.getRoadSeg()).getY();
+
+//	        	carList.get(2).destination(roundEndX2, roundEndY2); // end of segment
+//	        	carList.get(2).start();
+	        	car.destination(roundEndX2, roundEndY2);
+//	        	car2.destination(roundEndXX2, roundEndYY2);
+	        	car.start();
+//	        	car2.start();
 	        	
-	        	carList.get(i).destination(roundEndX, roundEndY); // end of segment
-	        	carList.get(i).start();
         	}
         	catch(NullPointerException e) {
 //        		System.err.println("What NULL: ");
         		e.printStackTrace();
         		System.exit(1);
         	}
-        }
+//        }
 
 
 

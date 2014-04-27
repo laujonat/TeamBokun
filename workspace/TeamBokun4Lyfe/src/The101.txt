@@ -5,7 +5,7 @@ Seventh Street|34.03411,-118.22115
 Fourth Street|34.04301,-118.22111
 First Street|34.04733,-118.22143
 Cesar Chavez Avenue|34.05047,-118.22287
-I-10 east (San Bernardino Freeway) San Bernardino|34.05246,-118.22465
+I-10 east (San Bernardino Freeway) San Bernardino|34.05530,-118.21419
 Mission Road|34.05293,-118.22654
 Vignes Street|34.05364,-118.23147
 Alameda Street Union Station|34.05426,-118.23793
@@ -40,7 +40,7 @@ Coldwater Canyon Avenue|34.15678,-118.41380
 Woodman Avenue|34.15562,-118.43124
 Van Nuys Boulevard|34.15704,-118.44873
 Sepulveda Boulevard|34.15963,-118.46611
-I-405 (San Diego Freeway) Santa Monica, Sacramento|34.16056,-118.46952
+I-405 (San Diego Freeway) Santa Monica, Sacramento|34.16062,-118.46958
 Haskell Avenue|34.16510,-118.47482
 Hayvenhurst Avenue|34.16544,-118.49240
 Balboa Boulevard Encino|34.17046,-118.50111

@@ -5,7 +5,7 @@ SR 1 south (Lincoln Boulevard) to SR 2 east|34.01481,-118.48594
 Cloverfield Boulevard|34.02453,-118.46928
 Centinela Avenue|34.02767,-118.45265
 Bundy Drive|34.02822,-118.44926
-I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach|34.03130,-118.43353
+I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach|34.03134,-118.43366
 National Boulevard, Overland Avenue|34.03187,-118.41716
 National Boulevard|34.02967,-118.40315
 Robertson Boulevard Culver City|34.03073,-118.39115
@@ -30,7 +30,7 @@ Boyle Avenue|34.03395,-118.22081
 Fourth Street|34.04302,-118.21717
 Cesar Chavez Avenue|34.04961,-118.21411
 I-5 north (Golden State Freeway) Sacramento|34.05045,-118.21400
-US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood|34.05267,-118.21400
+US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood|34.05530,-118.21419
 State Street|34.05436,-118.21237
 Soto Street|34.05445,-118.20299
 City Terrace Drive|34.05569,-118.18437

@@ -2,7 +2,7 @@ Imperial Highway west|33.93127,-118.40233
 SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport|33.93133,-118.39627
 Nash Street LAX Airport|33.9318233,-118.387142
 La Cienega Boulevard, Aviation Boulevard|33.93063,-118.36891
-I-405 (San Diego Freeway) Santa Monica, Long Beach|33.93341,-118.35710
+I-405 (San Diego Freeway) Santa Monica, Long Beach|34.16062,-118.46958
 Hawthorne Boulevard|33.93343,-118.35301
 Prairie Avenue|33.93342,-118.35286
 Crenshaw Boulevard|33.92482,-118.33490

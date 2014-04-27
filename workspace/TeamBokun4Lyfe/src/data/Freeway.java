@@ -59,10 +59,10 @@ public class Freeway
 		speeds.add(speed);
 	}
 	
-	public Double calculateAvgSpeed()
+	public double calculateAvgSpeed()
 	{
-		Double sum = (double) 0;
-		Double avg = (double) 0;
+		double sum = (double) 0;
+		double avg = (double) 0;
 		for(int i = 0; i < speeds.size(); i++)
 		{
 			sum += speeds.get(i);

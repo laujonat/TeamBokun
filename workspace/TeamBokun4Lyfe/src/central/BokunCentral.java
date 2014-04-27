@@ -1,5 +1,7 @@
 package central;
 
+import graph.Traverse;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import jsonParse.CarJsonParser;
 import data.Car;
 import data.ConstructFreeways;
+import data.RoadSegment;
 import mySQL.MySQLConnect;
 
 public class BokunCentral {
@@ -20,6 +23,10 @@ public class BokunCentral {
 	private ArrayList<Car> allCars;
 	private ArrayList<PlotInfo> carLatLongData;
 //	private PrintWriter writer;
+	
+	public static void main(String[] args) {
+		new BokunCentral();
+	}
 	
 	public BokunCentral() {
 		try {
@@ -48,6 +55,18 @@ public class BokunCentral {
 //					+ " " + carLatLongData.get(i).getSpeed() + " " + carLatLongData.get(i).getFwy());
 //		}
 		
+		try {
+			new Traverse(ConstructFreeways.E10.getRoadSegAt(5), new double[] {ConstructFreeways.N101.getRoadSegAt(9).getX(), ConstructFreeways.N101.getRoadSegAt(9).getY()});
+		}
+		catch(Exception e) { e.printStackTrace(); }
+		
+	}
+	
+	//	Get the fastest path from source to destination
+	public static void getFastestPath(String startKey, String endKey) {
+		//	Find the road segments corresponding to the start and end keys
+		RoadSegment start = ConstructFreeways.getRoadSegmentAtKey(startKey);
+		RoadSegment end = ConstructFreeways.getRoadSegmentAtKey(endKey);
 	}
 	
 	//	Update database

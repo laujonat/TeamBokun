@@ -552,7 +552,7 @@ public class ConstructFreeways {
 	}
 	
 	// only need 1 direction per freeway
-	public RoadSegment getRoadSegmentAtKey(String key)
+	public static RoadSegment getRoadSegmentAtKey(String key)
 	{
 		for(int i = 0; i < N101.getNumRoadSeg(); i++)
 		{

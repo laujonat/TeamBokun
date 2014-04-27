@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
+import data.ConstructFreeways;
 import data.Freeway;
 import data.RoadSegment;
 
@@ -32,7 +34,14 @@ public class Traverse extends Thread {
 		
 		fullPath = "Start at " + start.getKey() + "\n";
 		
-		//	CALL FUNCTION TO GET MATCHING ROAD SEGMENT AND CLONE HERE AND SET THE CLONE RUNNING IN OPPOSITE DIRECTION
+		this.start();
+		
+		//	CALL FUNCTION TO GET MIRROR ROAD SEGMENT AND CLONE HERE AND SET THE CLONE RUNNING IN OPPOSITE DIRECTION
+		RoadSegment mirrorSeg = ConstructFreeways.getPolarOppositeRoadSeg(currFreeway, currSegment);
+		Traverse clone = new Traverse(this);
+		clone.currSegment = mirrorSeg;
+		clone.currFreeway = mirrorSeg.getFreewayObj();
+		clone.start();
 	}
 	
 	//	Copy constructor
@@ -50,7 +59,7 @@ public class Traverse extends Thread {
 	@Override
 	public void run() {
 		//	Loop until a node is reached or end of road is reached
-		while(true/*!currSegment.isA_Node() && currFreeway.getNextRoadSeg(currSegment) != null*/) {
+		while(!currSegment.isA_Node() && currFreeway.getNextRoadSeg(currSegment) != null) {
 			try {
 				RoadSegment nextSeg = currFreeway.getNextRoadSeg(currSegment);
 				double distance = getDistanceToRoadSeg(nextSeg);
@@ -60,6 +69,7 @@ public class Traverse extends Thread {
 				totalTravelTime += distance/minSpeed;
 				
 				currSegment = nextSeg;
+				fullPath += "Go to " + currSegment.getKey() + "\n";
 				
 				//	Check if reached destination
 				if(currSegment.getX() == destination[0] && currSegment.getY() == destination[1]) {
@@ -74,11 +84,23 @@ public class Traverse extends Thread {
 		}
 		
 		//	Get all options if reached a Node
-		if()
+		if(currSegment.isA_Node()) {
+			Node node = currFreeway.getNodeAtSegment(currSegment);
+			if(node == null) {
+				System.err.println("Unknown error. Killing this traversal unit...");
+				return;
+			}
+			
+			//	Create clones and send them along all paths
+			ArrayList<Freeway> freeways = node.getOptions(currFreeway);
+			for(int i = 0; i < freeways.size(); i++) {
+				
+			}
+		}
 	}
 	
 	//	Gets distance from current road segment to next one
-	public double getDistanceToRoadSeg(RoadSegment rs) throws Exception {
+	private double getDistanceToRoadSeg(RoadSegment rs) throws Exception {
 		String start = currSegment.getX() + "," + currSegment.getY();
 		String end = rs.getX() + "," + rs.getY();
 		

@@ -39,9 +39,37 @@ public class Node
 		
 		for(int i = 0; i < edges.size(); i++)
 		{
-			if(!((edges.get(i)).getName()).equalsIgnoreCase(fwy.getName()))
+			if(fwy.getName().equalsIgnoreCase("N101"))
 			{
-				options.add(edges.get(i));
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("S101"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("S101"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("N101"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("N405"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("S405"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("S405"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("N405"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("E10"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("W10"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("W10"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("E10"))) { options.add(edges.get(i)); }
+			}
+			else if (fwy.getName().equalsIgnoreCase("E105"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("W105"))) { options.add(edges.get(i)); }
+			}
+			else //if (fwy.getName().equalsIgnoreCase("W105"))
+			{
+				if(!(((edges.get(i)).getName()).equalsIgnoreCase("E105"))) { options.add(edges.get(i)); }
 			}
 		}
 		

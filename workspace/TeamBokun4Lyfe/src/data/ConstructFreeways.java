@@ -550,4 +550,38 @@ public class ConstructFreeways {
 
 		}
 	}
+	
+	// only need 1 direction per freeway
+	public RoadSegment getRoadSegmentAtKey(String key)
+	{
+		for(int i = 0; i < N101.getNumRoadSeg(); i++)
+		{
+			if(N101.getRoadSegAt(i).getKey().equalsIgnoreCase(key))
+			{
+				return N101.getRoadSegAt(i);
+			}
+		}
+		for(int i = 0; i < E10.getNumRoadSeg(); i++)
+		{
+			if(E10.getRoadSegAt(i).getKey().equalsIgnoreCase(key))
+			{
+				return E10.getRoadSegAt(i);
+			}
+		}
+		for(int i = 0; i < N405.getNumRoadSeg(); i++)
+		{
+			if(N405.getRoadSegAt(i).getKey().equalsIgnoreCase(key))
+			{
+				return N405.getRoadSegAt(i);
+			}
+		}
+		for(int i = 0; i < E105.getNumRoadSeg(); i++)
+		{
+			if(E105.getRoadSegAt(i).getKey().equalsIgnoreCase(key))
+			{
+				return E105.getRoadSegAt(i);
+			}
+		}
+		return null;
+	}
 }

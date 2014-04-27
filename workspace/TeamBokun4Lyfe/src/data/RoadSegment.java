@@ -1,5 +1,7 @@
 package data;
 
+import java.util.ArrayList;
+
 public class RoadSegment
 {
 
@@ -10,10 +12,7 @@ public class RoadSegment
 	private double minSpeed;
 	private Freeway freeway;
 	private boolean isA_Node;
-	/*
-	 * hold all cars driving on it
-	 * make min speed handled
-	 */
+	private ArrayList<Car> currentCars;
 	
 	public RoadSegment(String key, int ID, Freeway freeway)
 	{
@@ -26,6 +25,7 @@ public class RoadSegment
 		minSpeed = (double)9001;
 		isA_Node = false;
 		determineNodeStatus();
+		currentCars = new ArrayList<Car>();
 	}
 	
 	public RoadSegment(RoadSegment rs) {
@@ -35,6 +35,10 @@ public class RoadSegment
 //		this.endRampCoordinates = rs.endRampCoordinates;
 		this.minSpeed = rs.minSpeed;
 		this.freeway = rs.freeway;
+		//is the following right? vvvvv
+		isA_Node = false;
+		determineNodeStatus();
+		currentCars = new ArrayList<Car>();
 	}
 	
 	public int getID() { return ID; }
@@ -81,20 +85,58 @@ public class RoadSegment
 	
 	public void determineNodeStatus()
 	{
-		
 		for(int i = 0; i < freeway.getNumNodes(); i++)
 		{
 			if(freeway.getNodes().get(i).getLatitude() == getX())
 				if(freeway.getNodes().get(i).getLongitude() == getY())
 					isA_Node = true;
 		}
-		
 	}
 	
 	public boolean isA_Node()
 	{
 		return isA_Node;
 	}
+	
+	public void addCar(Car c) { currentCars.add(c); }
+	
+	public void removeCar(Car c)
+	{
+		for(int i = 0 ; i < currentCars.size(); i++)
+		{
+			if(c.equals(currentCars.get(i)))
+			{
+				currentCars.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public int numCarsCurrently() { return currentCars.size(); }
+	
+	public void determineMinSpeed()
+	{
+		if(currentCars.isEmpty())
+			resetMinSpeedTO_OVER_9000();
+		else
+		{
+			minSpeed = (currentCars.get(0)).getSpeed();
+			for(int i = 1; i < currentCars.size(); i++)
+			{
+				if((currentCars.get(i)).getSpeed() < minSpeed)
+				{
+					minSpeed = (currentCars.get(i)).getSpeed();
+				}
+			}
+		}
+	}
+	
+	public boolean noDrivers()
+	{
+		if(currentCars.isEmpty()) { return true; }
+		return false;
+	}
+	
 	
 	@Override
 	public String toString() {

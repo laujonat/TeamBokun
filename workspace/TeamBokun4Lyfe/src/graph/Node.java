@@ -31,7 +31,7 @@ public class Node
 	public void setEdges(ArrayList<Freeway> edges) { this.edges = edges; }
 	public ArrayList<Freeway> getEdges() { return edges; }
 	
-	
+	//this might need editing hurrrr
 	public ArrayList<Freeway> getOptions(Freeway fwy)
 	{
 		

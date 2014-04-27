@@ -78,18 +78,6 @@ public class Freeway
 	
 	public int getNumRoadSeg() { return (segments.size()); }
 	
-	public RoadSegment getRoadSegmentAtKey(String key)
-	{
-		for(int i = 0; i < segments.size(); i++)
-		{
-			if(segments.get(i).getKey().equalsIgnoreCase(key))
-			{
-				return segments.get(i);
-			}
-		}
-		return null;
-	}
-	
 	public RoadSegment getNextRoadSeg(RoadSegment rs) 
 	{ 
 		int currentID = rs.getID();
@@ -138,6 +126,17 @@ public class Freeway
 	public int getNumNodes()
 	{
 		return nodes.size();
+	}
+	
+//	Return the Node at a road segment, if there is one
+	public Node getNodeAtSegment(RoadSegment rs) {
+		for(int i = 0; i < nodes.size(); i++) {
+			Node n = nodes.get(i);
+			if(n.getLatitude() == rs.getX() && n.getLongitude() == rs.getY())
+				return n;
+		}
+		
+		return null;
 	}
 	
 }

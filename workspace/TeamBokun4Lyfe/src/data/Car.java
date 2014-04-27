@@ -18,6 +18,8 @@ public class Car {
 		this.speed = speed;
 		this.freeway = freeway;
 		this.roadSegment = rs;
+		//DOES THE FOLLOWING WORK?!?!? vvvvv
+		rs.addCar(this);
 		this.latitude = rs.getX();
 		this.longitude = rs.getY();
 		Calendar time = Calendar.getInstance();
@@ -31,21 +33,32 @@ public class Car {
 	public void setId(int id) { this.id = id; }
 	
 	public double getSpeed() { return speed; }
-	public void setSpeed(double speed) { this.speed = speed; }
+	public void setSpeed(double speed)
+	{ 
+		this.speed = speed;
+		roadSegment.determineMinSpeed();
+	}
 	
 	public String getFreeway() { return freeway.getName(); }
 	public Freeway getFreewayObj() { return freeway; }
 	public void setFreeway(Freeway freeway) { this.freeway = freeway; }
 	
 	public RoadSegment getRoadSeg() { return roadSegment; }
+	//check this method
 	public void setRoadSeg(RoadSegment rs)
 	{ 
-		if(this.speed == rs.getMinSpeed())
+		roadSegment.removeCar(this);
+		if((this.speed == roadSegment.getMinSpeed()) && roadSegment.noDrivers())
 		{
-			rs.resetMinSpeedTO_OVER_9000();
+			roadSegment.resetMinSpeedTO_OVER_9000();
 		}
+		else if(this.speed == roadSegment.getMinSpeed()) //case that there are other drivers
+		{
+			roadSegment.determineMinSpeed();
+		}
+		
 		roadSegment = rs; 
-		rs.checkMinSpeed(this.speed);
+		roadSegment.checkMinSpeed(this.speed);
 	}
 	
 	public int getHour() { return hour; }

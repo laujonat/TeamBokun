@@ -52,6 +52,7 @@ public class RoadSegment
 	public void setMinSpeed(double s) { minSpeed = s; }
 	
 	public String getFreewayName() { return (freeway.getName()); }
+	public Freeway getFreewayObj() { return freeway; }
 	
 	public void setFreeway(Freeway f)
 	{

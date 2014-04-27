@@ -9,6 +9,11 @@ public class RoadSegment
 //	private double[] endRampCoordinates;
 	private double minSpeed;
 	private Freeway freeway;
+	private boolean isA_Node;
+	/*
+	 * hold all cars driving on it
+	 * make min speed handled
+	 */
 	
 	public RoadSegment(String key, int ID, Freeway freeway)
 	{
@@ -19,6 +24,8 @@ public class RoadSegment
 //		endRampCoordinates = new double[2];
 		
 		minSpeed = (double)9001;
+		isA_Node = false;
+		determineNodeStatus();
 	}
 	
 	public RoadSegment(RoadSegment rs) {
@@ -52,7 +59,6 @@ public class RoadSegment
 	public void setMinSpeed(double s) { minSpeed = s; }
 	
 	public String getFreewayName() { return (freeway.getName()); }
-	public Freeway getFreewayObj() { return freeway; }
 	
 	public void setFreeway(Freeway f)
 	{
@@ -70,6 +76,23 @@ public class RoadSegment
 		{
 			setMinSpeed(speed);
 		}
+	}
+	
+	public void determineNodeStatus()
+	{
+		
+		for(int i = 0; i < freeway.getNumNodes(); i++)
+		{
+			if(freeway.getNodes().get(i).getLatitude() == getX())
+				if(freeway.getNodes().get(i).getLongitude() == getY())
+					isA_Node = true;
+		}
+		
+	}
+	
+	public boolean isA_Node()
+	{
+		return isA_Node;
 	}
 	
 	@Override

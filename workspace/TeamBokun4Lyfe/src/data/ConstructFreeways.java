@@ -18,10 +18,13 @@ public class ConstructFreeways {
 	public static Freeway E105;
 	public static Freeway W105;
 	
+	//public static Node 
+	
 	public static BufferedReader reader;
 	
 	public ConstructFreeways()
 	{
+		generateNodes();
 		constructN101();
 		constructS101();
 		constructN405();
@@ -30,6 +33,11 @@ public class ConstructFreeways {
 		constructW10();
 		constructE105();
 		constructW105();
+	}
+	
+	public static void generateNodes()
+	{
+		//Node
 	}
 	
 	public static void constructN101()
@@ -53,6 +61,9 @@ public class ConstructFreeways {
 				temp.setX(Double.parseDouble(coords[0]));
 				temp.setY(Double.parseDouble(coords[1]));
 			}
+			
+
+			//populate nodes
 		}
 		catch (IOException e)
 		{
@@ -399,6 +410,52 @@ public class ConstructFreeways {
 		}
 	
 	}
+	
+	
+	public static RoadSegment getPolarOppositeRoadSeg(Freeway fwy, RoadSegment rs)
+	{
+		
+		RoadSegment polarOpposite;
+		int polarOppositeIndex = 0;
+		polarOppositeIndex = fwy.getNumRoadSeg() - (rs.getID() + 1);
+		
+		if(fwy.getName().equalsIgnoreCase("N101"))
+		{
+			polarOpposite = S101.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("S101"))
+		{
+			polarOpposite = N101.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("N405"))
+		{
+			polarOpposite = S405.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("S405"))
+		{
+			polarOpposite = N405.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("E10"))
+		{
+			polarOpposite = W10.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("W10"))
+		{
+			polarOpposite = E10.getRoadSegAt(polarOppositeIndex);
+		}
+		else if(fwy.getName().equalsIgnoreCase("E105"))
+		{
+			polarOpposite = W105.getRoadSegAt(polarOppositeIndex);
+		}
+		else //if(getName().equalsIgnoreCase("W105"))
+		{
+			polarOpposite = E105.getRoadSegAt(polarOppositeIndex);
+		}
+		
+		return polarOpposite;
+		
+	}
+	
 	
 	public Freeway getFreeway(String freeway, String direction)
 	{

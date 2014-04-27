@@ -1,5 +1,7 @@
 package data;
 
+import graph.Node;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,6 +16,7 @@ public class Freeway
 	private int numRoadSeg;
 	private ArrayList<Double> speeds;
 	private int carHour;
+	private ArrayList<Node> nodes;
 	
 	public Freeway(String name)
 	{
@@ -23,6 +26,7 @@ public class Freeway
 		speeds = new ArrayList<Double>();
 		Calendar time = Calendar.getInstance();
 		carHour = time.get(Calendar.HOUR_OF_DAY);
+		nodes = new ArrayList<Node>();
 	}
 	
 	public String getName() { return name; }
@@ -106,5 +110,19 @@ public class Freeway
 //	{
 //		for(int i = 0; i < )
 //	}
+	
+	public void addNodes(double lat, double longi, ArrayList<Freeway> edges)
+	{
+		Node temp = new Node(lat, longi, edges);
+		nodes.add(temp);
+	}
+	
+	
+	public ArrayList<Node> getNodes(){ return nodes; }
+	
+	public int getNumNodes()
+	{
+		return nodes.size();
+	}
 	
 }

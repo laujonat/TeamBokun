@@ -11,6 +11,7 @@ import javax.swing.Timer;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 import data.Car;
+import data.RoadSegment;
 
 public class DrawCar extends Thread implements ActionListener{
 	private Car car;
@@ -27,17 +28,17 @@ public class DrawCar extends Thread implements ActionListener{
     public static final double MAX_LAT = 85.05112877980659;
     public static final double MIN_LAT = -85.05112877980659;
     private static int TILE_SIZE = 256;
+    private List markers;
+    public boolean flag;
     
     
     private double incrementX;
     private double incrementY;
     private double convert;
-    double factor = 1e5;
+    private int numSegments;
     
- 
-
-	
-	protected Point center;
+    double factor = 1e5;
+  
 	
 	public DrawCar(JMapViewer treeMap, double x, double y, Car car) {
 		this.treeMap = treeMap;
@@ -47,8 +48,10 @@ public class DrawCar extends Thread implements ActionListener{
 		currX = roundEndX;
 		currY = roundEndY;
 		this.car = car;
+		this.numSegments = car.getFreewayObj().getNumRoadSeg();
+		markers = treeMap.getMapMarkerList();
+		flag = false;
 		timer = new Timer(5, this);
-//		timer.setInitialDelay(100);
 	}
 	
 	// This function converts decimal degrees to radians
@@ -71,78 +74,86 @@ public class DrawCar extends Thread implements ActionListener{
 	
 	public void destination(double newX, double newY) {
 		this.newX = newX;
-		this.newY = newY;
-		
-		
-		
+		this.newY = newY;	
+		numSegments--;
 	}
 	
 	@Override
 	public void run() {
-		treeMap.addMapMarker(new MapMarkerDot(currX, currY));
+		timer.stop();
 //		double factor = 1e5;
-		
+
 		double calcDistance = distance(currX, currY, newX, newY);
 		
-		double roundDistance = Math.round(calcDistance * factor) / factor;
-    	double roundSpeed = Math.round(car.getSpeed() * factor) / factor;
+		double roundDistance = Math.round(calcDistance * factor)/factor;
+//    	System.out.println("THIS IS DISTANCE " + roundDistance);
+
+    	double roundSpeed = Math.round(car.getSpeed() * factor)/factor;
     	
-    	double time = Math.round((roundDistance/roundSpeed) * factor) / factor; // minutes
+    	double time = Math.round((roundDistance/roundSpeed) * factor)/factor; // minutes
     	
-    	double convertToMili =  (Math.round((time * 60000) * factor) / factor); // milli
-//    	System.out.println("THIS IS CONVERTED" + convertToMili);
-    	
-    	convert = (Math.round((convertToMili/5) * factor) / factor);
-    	System.out.println("THIS IS CONVERTED" + convert);
-    	
+    	double convertToMili =  Math.round((time * 60000) * factor)/factor; // milli
+	
+    	convert = Math.round((convertToMili/5) * factor) / factor;
+    	double yDistance = (Math.round((currY - newY) * factor) / factor);
+		double xDistance = (Math.round((currX - newX) * factor) / factor);
+		
+		incrementY = (Math.round((yDistance/convert) * factor) / factor); 
+		incrementX = (Math.round((xDistance/convert) * factor) / factor); 
+//    	System.out.println("THIS IS CONVERTED " + convert);
 		timer.start();
+	}
+	
+	public void setX(double x) {
+		this.currX = x;
+	}
+	
+	public void setY(double y) {
+		this.currY = y;
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*
-		 * OsmMercator - Scale class
-		 * 
-		 */
-		if(newX == currX && newY == currY) {
-				timer.stop();
-		}
-			
-		List markers = treeMap.getMapMarkerList();
-		
 		for(int k = 0; k < markers.size(); k++) {
 			carMarker = (MapMarkerDot) markers.get(k);
-			
-//			if((carMarker.getLat() >= (newX-.01) && (carMarker.getLat() <= (newX+0.01))) && (carMarker.getLon() <= (newY+.01) && (carMarker.getLon() >= (newY-.01)))){                                 
-//					timer.stop();
-				if(carMarker.getLat() == currX && carMarker.getLon() == currY) {
-				treeMap.removeMapMarker(carMarker);    
-//	                System.out.println("IN HERE");
-                break;                                              
-            }
+			treeMap.removeMapMarker(carMarker);
 		}
-//			timer.stop();
-//		}
+//		if(newX == currX && newY == currY) {
+//			
+////				if(carMarker.getLat() == currX && carMarker.getLon() == currY) {
+//					  
+////					setX(newX);
+////					setY(newY);
+//					RoadSegment nextSeg = car.getFreewayObj().getNextRoadSeg(car.getRoadSeg());
+//					car.setRoadSeg(nextSeg);
+//					destination(nextSeg.getX(), nextSeg.getY());
+//					
+//					timer.stop();
+//					run();
+//					return;
+////					break;                                              
+//////	           }
+////			}
+////			timer.stop();
+//		} 
 		
-
 		
 		
-		if(newX != currX) {
-			double yDistance = (Math.round((currY - newY) * factor) / factor);
-			double xDistance = (Math.round((currX - newX) * factor) / factor);
-			
-			incrementY = (Math.round((yDistance/convert) * factor) / factor); 
-			incrementX = (Math.round((xDistance/convert) * factor) / factor); 
-//			System.out.println(currY + " YINCRE");
-//			System.out.println(newY + " XNINCRE");
-			
+//		if(newX != currX) {
 			currY -= incrementY;
 			currX -= incrementX;
-		}
+			
+
+//		}
 		
-//		currY += 0.00001;
-//		currX += 0.00001;
+//		currY -= 0.00001;
+//		currX -= 0.00001;
 //		treeMap.removeAllMapMarkers();
+//		currY -= incrementY;
+//		currX -= incrementX;
+		double roundY = Math.round((currY) * factor) / factor;
+		double roundX = Math.round((currX) * factor) / factor;
 		treeMap.addMapMarker(new MapMarkerDot(currX, currY));
 		
 		

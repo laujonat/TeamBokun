@@ -1,0 +1,21 @@
+Imperial Highway west|33.93127,-118.40233
+SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport|33.93133,-118.39627
+Nash Street LAX Airport|33.9318233,-118.387142
+La Cienega Boulevard, Aviation Boulevard|33.93063,-118.36891
+I-405 (San Diego Freeway) Santa Monica, Long Beach|33.93341,-118.35710
+Hawthorne Boulevard|33.93343,-118.35301
+Prairie Avenue|33.93342,-118.35286
+Crenshaw Boulevard|33.92482,-118.33490
+Vermont Avenue|33.92808,-118.29682
+I-110 (Harbor Freeway) Los Angeles, San Pedro|33.92850,-11829128
+Central Avenue|33.92807,-118.25433
+Wilmington Avenue|33.92848,-118.24471
+Long Beach Boulevard|33.92483,-118.20995
+I-710 (Long Beach Freeway) Pasadena, Long Beach|33.91614,-118.19023
+Garfield Avenue|33.91261,-118.17989
+Paramount Boulevard|33.91261,-118.15343
+SR 19 (Lakewood Boulevard)|33.91282,-118.14707
+Bellflower Boulevard|33.91295,-118.13308
+I-605 (San Gabriel River Freeway)|33.91402,-118.10497
+Hoxie Avenue Norwalk Metro Station|33.91398,-118.10462
+Studebaker Road|33.91439,-118.09930

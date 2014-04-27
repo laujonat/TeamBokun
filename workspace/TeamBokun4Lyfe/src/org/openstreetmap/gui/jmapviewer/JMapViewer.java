@@ -36,6 +36,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileLoaderListener;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
+import central.BokunCentral;
+
 /**
  *
  * Provides a simple panel that displays pre-rendered map tiles loaded from the
@@ -54,7 +56,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     protected static final Point[] move = { new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1) };
 
     public static final int MAX_ZOOM = 17;
-    public static final int MIN_ZOOM = 0;
+    public static final int MIN_ZOOM = 11;
 
     protected List<MapMarker> mapMarkerList;
     protected List<MapRectangle> mapRectangleList;
@@ -613,42 +615,66 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         JButton testButton = new JButton();
         testButton.setBackground(Color.RED);
         testButton.setOpaque(true);
-        testButton.setBounds(1350, 510, 15, 30);
+        testButton.setBounds(1350, 530, 15, 30);
         testButton.setToolTipText("80+ mph");
         add(testButton);
         
         JButton testButton1 = new JButton();
         testButton1.setBackground(Color.ORANGE);
         testButton1.setOpaque(true);
-        testButton1.setBounds(1350, 540, 15, 30);
+        testButton1.setBounds(1350, 560, 15, 30);
         testButton1.setToolTipText("61-80 mph");
         add(testButton1);
         
         JButton testButton2 = new JButton();
         testButton2.setBackground(Color.YELLOW);
         testButton2.setOpaque(true);
-        testButton2.setBounds(1350, 570, 15, 30);
+        testButton2.setBounds(1350, 590, 15, 30);
         testButton2.setToolTipText("41-60 mph");
         add(testButton2);
         
         JButton testButton3 = new JButton();
         testButton3.setBackground(Color.GREEN);
         testButton3.setOpaque(true);
-        testButton3.setBounds(1350, 600, 15, 30);
+        testButton3.setBounds(1350, 620, 15, 30);
         testButton3.setToolTipText("21-40 mph");
         add(testButton3);
         
         JButton testButton4 = new JButton();
         testButton4.setBackground(Color.WHITE);
         testButton4.setOpaque(true);
-        testButton4.setBounds(1350, 630, 15, 30);
+        testButton4.setBounds(1350, 650, 15, 30);
         testButton4.setToolTipText("0-20 mph");
         add(testButton4);
         
-        JButton legend = new JButton("LEGEND");
-        legend.setOpaque(false);
-        legend.setBounds(1310, 670, 100, 15);
-        add(legend);
+//        JButton legend = new JButton("LEGEND");
+//        legend.setOpaque(false);
+//        legend.setBounds(1310, 670, 100, 15);
+//        add(legend);
+        
+        JButton histData = new JButton("Historical Data"); 
+        histData.setBackground(Color.WHITE); 
+        histData.setOpaque(true); 
+        histData.setBounds(550, 20, 150, 20);
+        histData.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) { 
+        		//Execute when button is pressed 
+        		HistDataWindow hi = new HistDataWindow(); 
+        		} 
+        	}); 
+        JButton exportData = new JButton("Export Data"); 
+        exportData.setBackground(Color.WHITE); 
+        exportData.setOpaque(true);
+        exportData.setBounds(720, 20, 150, 20); 
+        exportData.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) { 
+        		//Execute when button is pressed 
+        			BokunCentral.exportDataToTxtFile();
+        		} 
+        	}); 
+        add(histData); 
+        add(exportData);
+      
         
         // outer border of the map
         int mapSize = tilesize << zoom;
@@ -953,6 +979,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     public void addMapMarker(MapMarker marker) {
         mapMarkerList.add(marker);
         repaint();
+        validate();
     }
 
     public void removeMapMarker(MapMarker marker) {

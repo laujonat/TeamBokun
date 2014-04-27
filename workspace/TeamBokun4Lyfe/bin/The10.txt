@@ -1,0 +1,37 @@
+SR 1 north (Pacific Coast Highway) Oxnard|34.01242,-118.49740
+4th Street, 5th Street|34.01249,-118.49047
+SR 1 south (Lincoln Boulevard) to SR 2 east|34.01481,-118.48594
+20th Street|34.02330,-118.47379
+Cloverfield Boulevard|34.02453,-118.46928
+Centinela Avenue|34.02767,-118.45265
+Bundy Drive|34.02822,-118.44926
+I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach|34.03130,-118.43353
+National Boulevard, Overland Avenue|34.03187,-118.41716
+National Boulevard|34.02967,-118.40315
+Robertson Boulevard Culver City|34.03073,-118.39115
+La Cienega Boulevard, Venice Boulevard (SR 187 west)|34.03656,-118.37553
+Fairfax Avenue, Washington Boulevard|34.03526,-118.36951
+La Brea Avenue|34.03431,-118.35011
+Crenshaw Boulevard|34.03509,-118.33373
+Arlington Avenue|34.03671,-118.31768
+Western Avenue, Normandie Avenue|34.03717,-118.30899
+Hoover Street, Vermont Avenue|34.03697,-118.29155
+Hoover Street|34.03719,-118.28402
+I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles|34.03817,-118.27397
+Grand Avenue|34.03461,-118.26709
+Los Angeles Street Convention Center|34.03205,-118.26239
+Maple Avenue|34.03121,-118.25995
+San Pedro Street|34.02967,-118.25611
+Central Avenue|34.02594,-118.24920
+Alameda Street|34.02472,-118.23926
+Mateo Street, Santa Fe Avenue|34.02760,-118.23222
+I-5 south (Santa Ana Freeway) / SR 60 east (Pomona Freeway) Santa Ana, Pomona|34.02950,-118.224543
+Boyle Avenue|34.03395,-118.22081
+Fourth Street|34.04302,-118.21717
+Cesar Chavez Avenue|34.04961,-118.21411
+I-5 north (Golden State Freeway) Sacramento|34.05045,-118.21400
+US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood|34.05267,-118.21400
+State Street|34.05436,-118.21237
+Soto Street|34.05445,-118.20299
+City Terrace Drive|34.05569,-118.18437
+Eastern Avenue|34.06053,-118.17347

@@ -165,10 +165,4 @@ public class DirectionsJsonParser {
 	public double[] getDestCoord() { return destCoord; }
 
 	public double getDistance() { return distance; }
-
-//	public static void main(String[] args) {
-//		DirectionsJsonParser yay = new DirectionsJsonParser();
-//		yay.requestDirections("15371 karl avenue, monte sereno", "3131 mcclintock street, los angeles");
-//		System.out.println(yay.toString());
-//	}
 }

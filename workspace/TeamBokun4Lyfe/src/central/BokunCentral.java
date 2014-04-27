@@ -19,7 +19,7 @@ public class BokunCentral {
 	
 	private ArrayList<Car> allCars;
 	private ArrayList<PlotInfo> carLatLongData;
-	private PrintWriter writer;
+//	private PrintWriter writer;
 	
 	public BokunCentral() {
 		try {
@@ -61,13 +61,6 @@ public class BokunCentral {
 		}
 	}
 
-	public static void main(String[] args) {
-		BokunCentral bc = new BokunCentral();
-		
-//		for(int i = 0; i < jsonParser.getCars().size(); i++)
-//			System.out.println(jsonParser.getCars().get(i).toString());
-	}
-
 	public ArrayList<PlotInfo> aggregateCarLatLong()
 	{
 		ArrayList<PlotInfo> aggregatedData = new ArrayList<PlotInfo>();
@@ -81,8 +74,9 @@ public class BokunCentral {
 		return aggregatedData;
 	}
 	
-	public void exportDataToTxtFile()
+	public static void exportDataToTxtFile()
 	{
+		PrintWriter writer = null;
 		try
 		{
 			
@@ -139,6 +133,8 @@ public class BokunCentral {
 					avgSpd_E105 = E105Speeds[theHour];
 					avgSpd_W105 = W105Speeds[theHour];
 					writer.println(theHour + "," + avgSpd_N101 + "," + avgSpd_S101 + "," + avgSpd_N405 + "," + avgSpd_S405 + "," + avgSpd_E10 + "," + avgSpd_W10 + "," + avgSpd_E105 + "," + avgSpd_W105);
+					writer.flush();
+					//System.out.println(theHour + "," + avgSpd_N101 + "," + avgSpd_S101 + "," + avgSpd_N405 + "," + avgSpd_S405 + "," + avgSpd_E10 + "," + avgSpd_W10 + "," + avgSpd_E105 + "," + avgSpd_W105);
 				}
 			}
 
@@ -150,6 +146,7 @@ public class BokunCentral {
 		} 
 		finally 
 		{
+			if(writer != null)
 				writer.close();
 		}
 	}

@@ -1,10 +1,20 @@
 package org.openstreetmap.gui.jmapviewer;
 
+/**
+ * 		Eric Dong
+ * 		Michael(Bokun) Xu
+ * 		Jonathan Lau
+ * 		Christopher O'Brien
+ * 
+ * 		CS201 Final Project
+ */
+
 //License: GPL. Copyright 2008 by Jan Peter Stotz
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +51,9 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 import central.BokunCentral;
 import central.PlotInfo;
 import data.Car;
+import data.Freeway;
+import data.RoadSegment;
+import jsonParse.DirectionsJsonParser;
 
 /**
  *
@@ -67,6 +80,18 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     private ArrayList<DrawCar> carList;
     private DrawCar car = null;
     private Car carObj;
+    
+    String startStr = "";
+    String endStr = "";
+    double[] tempStartCoord;
+    double[] tempEndCoord;
+    int[] tempCurrentSpeed;
+    int[] tempSpeedLimit;
+    double tempDistance;
+    JTextArea jta;
+    MapMarkerCircle end;
+    MapMarkerCircle start;
+    DirectionsJsonParser directions = new DirectionsJsonParser();
 
     /**
      * Constructs the {@code Demo}.
@@ -85,15 +110,9 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         map().setDisplayPositionByLatLon(34.035, -118.238, 11);
         ArrayList<Car> allCars = BokunCentral.jsonParser.getCars();
         ArrayList<DrawCar> carList = new ArrayList<DrawCar>();
-//        car = new DrawCar(map(), 33.97403, -118.38212);
-//    	double endX = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getX();
-//    	double endY = allCars.get(0).getFreewayObj().getNextRoadSeg(allCars.get(0).getRoadSeg()).getY();
-//
-//        car = new DrawCar(map(), 33.97403, -118.38212, allCars.get(0));
-//        car.destination(endX, endY);
-//        car.start();
         
-//        System.out.println("HERE " + allCars.size());
+        end = new MapMarkerCircle(0, 0, 0);
+        start = new MapMarkerCircle(0, 0, 0);
         
         for(int i = 0; i < 20; ++i) {
         	double factor = 1e5;
@@ -113,14 +132,27 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         	double factor = 1e5;
 //        	double endX = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX();
 //        	double endY = allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY();
+        	try {
+        		Car c = allCars.get(i);
+        		Freeway f = c.getFreewayObj();
+        		RoadSegment rs = f.getNextRoadSeg(c.getRoadSeg());
+        		if(rs == null) {
+        			continue;
+        		}
+        		double roundEndX = Math.round(rs.getX() * factor) / factor;
+        		double roundEndY = Math.round(rs.getY() * factor) / factor;
+//        		double roundEndX = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX()) * factor) / factor;
         	
-        	double roundEndX = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getX()) * factor) / factor;
-        	double roundEndY = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY()) * factor) / factor;
-        	
-        	
-        	carList.get(i).destination(roundEndX, roundEndY);
-        	carList.get(i).start();
-
+//	        	double roundEndY = Math.round((allCars.get(i).getFreewayObj().getNextRoadSeg(allCars.get(i).getRoadSeg()).getY()) * factor) / factor;
+	        	
+	        	carList.get(i).destination(roundEndX, roundEndY); // end of segment
+	        	carList.get(i).start();
+        	}
+        	catch(NullPointerException e) {
+//        		System.err.println("What NULL: ");
+        		e.printStackTrace();
+        		System.exit(1);
+        	}
         }
 
 
@@ -154,8 +186,9 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         helpPanel.add(helpLabel);
 //        helpPanel.setVisible(false);
         panel.add(helpPanel, BorderLayout.SOUTH);
-        JButton button = new JButton("FOCUS");
-        button.addActionListener(new ActionListener() {
+        JButton focusButton = new JButton("FOCUS");
+        JButton resetButton = new JButton("RESET");
+        focusButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
 //                map().setDisplayToFitMapMarkers();
@@ -181,13 +214,27 @@ public class Demo extends JFrame implements JMapViewerEventListener {
             }
         });
         map().setTileLoader((TileLoader) tileLoaderSelector.getSelectedItem());
-        JTextField startingPointTextField = new JTextField();
-        startingPointTextField.setText("Starting Point: ");
+        
+        JLabel startLabel = new JLabel("Starting Point:"); 
+        JLabel destinationLabel = new JLabel("Destination:"); 
+        final JTextField startingPointTextField = new JTextField(); 
         startingPointTextField.setColumns(30);
         
-        JTextField destinationTextField = new JTextField();
-        destinationTextField.setText("Destination: ");
-        destinationTextField.setColumns(30);
+        final JTextField destinationTextField = new JTextField(); 
+        destinationTextField.setColumns(30); 
+        startingPointTextField.addActionListener(new ActionListener() { 
+        	public void actionPerformed(ActionEvent e) { 
+        		startStr = startingPointTextField.getText();
+        		System.out.println(startStr); 
+        		destinationTextField.requestFocus();
+        		} 
+        	});
+//        JTextField startingPointTextField = new JTextField();
+//        startingPointTextField.setText("Starting Point: ");
+//        startingPointTextField.setColumns(30);
+//       
+//        final JTextField destinationTextField = new JTextField();
+//        destinationTextField.setColumns(30);
         
         Border border = BorderFactory.createLineBorder(Color.BLACK);
     	final JTextArea jta = new JTextArea("Fastest Route: \n" + "\n" + "Time at Speed Limit: \n" + "\n" +  "Time at Current Speed (of traffic): \n" + "\n", 6, 10);
@@ -195,19 +242,60 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     	jta.setEditable(false);
     	jta.setVisible(false);
         
-    	destinationTextField.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-            	jta.setVisible(true);
-            	helpPanel.setVisible(false);
-            }
-        }); 
+//    	destinationTextField.addActionListener(new ActionListener()
+//        {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//            	jta.setVisible(true);
+//            	helpPanel.setVisible(false);
+//            }
+//        }); 
     	
-        panelBottom.add(startingPointTextField);
-        panelBottom.add(destinationTextField);
-        panelBottom.add(button);
-        panel.add(panelBottom, BorderLayout.NORTH);
+    	destinationTextField.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) { 
+    			endStr = destinationTextField.getText(); 
+    			System.out.println(endStr);
+    			directions.requestDirections(startStr, endStr); 
+    			//text area 
+    			tempDistance = directions.getDistance(); 
+    			tempStartCoord = directions.getOriginCoord(); 
+    			tempEndCoord = directions.getDestCoord();
+    			System.out.println("start coord: " + tempStartCoord[0] + ", " + tempStartCoord[1]); 
+    			System.out.println("end coord: " + tempEndCoord[0] + ", " + tempEndCoord[1]); 
+    			tempCurrentSpeed = directions.gettimeToDestAtCurrTraffic();
+    			tempSpeedLimit = directions.timeToDestAtSpeedLimit(); 
+    			System.out.println("time at current speed: " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes");
+    			System.out.println("time at speed limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes");
+    			jta.setText("\n Distance: " + tempDistance + " miles \n" + "\n" + " Time at Highway Speed Limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes \n" + "\n" + " Time at Current Speed (of traffic): " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes \n" + "\n"); 
+    			//Destination 
+    			Layer bokun = treeMap.addLayer("bokun");
+    			end = new MapMarkerCircle(bokun, "Destination", new Coordinate(tempEndCoord[0], tempEndCoord[1]), .005);
+    			end.setBackColor(Color.RED); 
+    			end.setColor(Color.RED); 
+    			//Starting Point 
+    			start = new MapMarkerCircle(bokun, "Starting Point", new Coordinate(tempStartCoord[0], tempStartCoord[1]), .005); 
+    			start.setBackColor(Color.RED); 
+    			start.setColor(Color.RED); 
+    			map().addMapMarker(end); 
+    			map().addMapMarker(start); 
+    			jta.setVisible(true); 
+    			helpPanel.setVisible(false);
+    			} 
+    		});
+    	panelBottom.add(startLabel); 
+    	panelBottom.add(startingPointTextField); 
+    	panelBottom.add(destinationLabel);
+    	panelBottom.add(destinationTextField); 
+    	panelBottom.add(focusButton); 
+    	panelBottom.add(resetButton); 
+    	panel.add(panelBottom, BorderLayout.NORTH);
+   	
+    	
+//        panelBottom.add(startingPointTextField);
+//        panelBottom.add(destinationTextField);
+//        panelBottom.add(focusButton);
+//        panelBottom.add(resetButton);
+//        panel.add(panelBottom, BorderLayout.NORTH);
         
         
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
@@ -253,19 +341,38 @@ public class Demo extends JFrame implements JMapViewerEventListener {
                 map().setZoomContolsVisible(showZoomControls.isSelected());
             }
         });
-        JButton histData = new JButton("Historical Data");
-        histData.addActionListener(new ActionListener() {
- 
-            public void actionPerformed(ActionEvent e)
-            {
-                //Execute when button is pressed
-            	HistDataWindow hi = new HistDataWindow();
-            }
-        });
         
-        JButton exportData = new JButton("Export Data");
-        panelTop.add(histData);
-        panelTop.add(exportData);
+        resetButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		jta.setVisible(false); 
+        		startingPointTextField.setText("");
+        		destinationTextField.setText("");
+        		end.setVisible(false); 
+        		start.setVisible(false); 
+        		} 
+        	});
+        
+//        JButton histData = new JButton("Historical Data");
+//        histData.addActionListener(new ActionListener() {
+// 
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                //Execute when button is pressed
+//            	HistDataWindow hi = new HistDataWindow();
+//            }
+//        });
+//        
+//        JButton exportData = new JButton("Export Data");
+//        exportData.addActionListener(new ActionListener()
+//        {
+//        	public void actionPerformed(ActionEvent e)
+//        	{
+//              	//carData.exportDataToTxtFile();
+//        	}
+//
+//        });
+//        panelTop.add(histData);
+//        panelTop.add(exportData);
 
         
         add(treeMap, BorderLayout.CENTER);
@@ -360,5 +467,12 @@ public class Demo extends JFrame implements JMapViewerEventListener {
             updateZoomParameters();
         }
     }
+    
+//    public void exportAction()
+//    {
+//    	BokunCentral bCentral = new BokunCentral();
+//    	bCentral.exportDataToTxtFile();
+//    	System.out.println("PRINTED SHIT");
+//    }
 
 }

@@ -1,0 +1,1 @@
+SELECT * FROM CS201DB.AverageSpeeds;

@@ -39,8 +39,6 @@ public class ConstructFreeways {
 		constructW10();
 		constructE105();
 		constructW105();
-		E10.addNodes(LittleTokyo);
-		E10.addNodes(SantaMonica);
 	}
 	
 	public static void generateNodes()
@@ -84,6 +82,8 @@ public class ConstructFreeways {
 	
 	public static void constructN101()
 	{
+		N101.addNodes(LittleTokyo);
+		N101.addNodes(MulhollandDrive);
 		try 
 		{
 			RoadSegment temp;
@@ -102,8 +102,6 @@ public class ConstructFreeways {
 				temp.setX(Double.parseDouble(coords[0]));
 				temp.setY(Double.parseDouble(coords[1]));
 			}
-//			N101.addNodes(LittleTokyo);
-//			N101.addNodes(MulhollandDrive);
 		}
 		catch (IOException e)
 		{
@@ -120,12 +118,12 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-		N101.addNodes(LittleTokyo);
-		N101.addNodes(MulhollandDrive);
 	}
 	
 	public static void constructS101()
 	{
+		S101.addNodes(MulhollandDrive);
+		S101.addNodes(LittleTokyo);
 		int id = 0;
 		for(int i = (N101.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -135,12 +133,13 @@ public class ConstructFreeways {
 			copy.setID(id++);
 			S101.addRoadSeg(copy);
 		}	
-		S101.addNodes(MulhollandDrive);
-		S101.addNodes(LittleTokyo);
 	}
 	
 	public static void constructN405()
 	{
+		N405.addNodes(LAX);
+		N405.addNodes(SantaMonica);
+		N405.addNodes(MulhollandDrive);
 		try 
 		{
 			RoadSegment temp;
@@ -159,9 +158,6 @@ public class ConstructFreeways {
 				temp.setX(Double.parseDouble(coords[0]));
 				temp.setY(Double.parseDouble(coords[1]));
 			}
-//			N405.addNodes(LAX);
-//			N405.addNodes(SantaMonica);
-//			N405.addNodes(MulhollandDrive);
 		}
 		catch (IOException e)
 		{
@@ -178,13 +174,13 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-		N405.addNodes(LAX);
-		N405.addNodes(SantaMonica);
-		N405.addNodes(MulhollandDrive);
 	}
 	
 	public static void constructS405()
 	{
+		S405.addNodes(MulhollandDrive);
+		S405.addNodes(SantaMonica);
+		S405.addNodes(LAX);
 		int id = 0;
 		for(int i = (N405.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -194,13 +190,12 @@ public class ConstructFreeways {
 			copy.setID(id++);
 			S405.addRoadSeg(copy);
 		}
-		S405.addNodes(MulhollandDrive);
-		S405.addNodes(SantaMonica);
-		S405.addNodes(LAX);
 	}
 	
 	public static void constructE10()
 	{
+		E10.addNodes(LittleTokyo);
+		E10.addNodes(SantaMonica);
 		try 
 		{
 			RoadSegment temp;
@@ -219,8 +214,6 @@ public class ConstructFreeways {
 				temp.setX(Double.parseDouble(coords[0]));
 				temp.setY(Double.parseDouble(coords[1]));
 			}
-//			E10.addNodes(LittleTokyo);
-//			E10.addNodes(SantaMonica);
 		}
 		catch (IOException e)
 		{
@@ -237,12 +230,12 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-//		E10.addNodes(LittleTokyo);
-//		E10.addNodes(SantaMonica);
 	}
 	
 	public static void constructW10()
 	{
+		W10.addNodes(SantaMonica);
+		W10.addNodes(LittleTokyo);
 		int id = 0;
 		for(int i = (E10.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -252,12 +245,11 @@ public class ConstructFreeways {
 			copy.setID(id++);
 			W10.addRoadSeg(copy);
 		}
-		W10.addNodes(SantaMonica);
-		W10.addNodes(LittleTokyo);
 	}
 
 	public static void constructE105()
 	{
+		E105.addNodes(LAX);
 		try 
 		{
 			RoadSegment temp;
@@ -276,7 +268,6 @@ public class ConstructFreeways {
 				temp.setX(Double.parseDouble(coords[0]));
 				temp.setY(Double.parseDouble(coords[1]));
 			}
-//			E105.addNodes(LAX);
 		}
 		catch (IOException e)
 		{
@@ -293,11 +284,11 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-		E105.addNodes(LAX);
 	}
 	
 	public static void constructW105()
 	{
+		W105.addNodes(LAX);
 		int id = 0;
 		for(int i = (E105.getNumRoadSeg() - 1); i >= 0; i--)
 		{
@@ -307,7 +298,6 @@ public class ConstructFreeways {
 			copy.setID(id++);
 			W105.addRoadSeg(copy);
 		}
-		W105.addNodes(LAX);
 	}
 	
 	public static void displayFreewayExits()

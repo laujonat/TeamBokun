@@ -128,7 +128,7 @@ public class Freeway
 		return nodes.size();
 	}
 	
-//	Return the Node at a road segment, if there is one
+	//	Return the Node at a road segment, if there is one
 	public Node getNodeAtSegment(RoadSegment rs) {
 		for(int i = 0; i < nodes.size(); i++) {
 			Node n = nodes.get(i);
@@ -139,4 +139,13 @@ public class Freeway
 		return null;
 	}
 	
+	//	Return the segment at a Node
+	public RoadSegment getSegmentAtNode(Node n) {
+		for(int i = 0; i < segments.size(); i++) {
+			RoadSegment rs = segments.get(i);
+			if(rs.getX() == n.getLatitude() && rs.getY() == n.getLongitude())
+				return rs;
+		}
+		return null;
+	}
 }

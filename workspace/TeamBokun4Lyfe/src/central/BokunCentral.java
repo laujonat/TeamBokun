@@ -19,13 +19,21 @@ public class BokunCentral {
 	public static MySQLConnect			SQLConnection;
 	public static ConstructFreeways		freeways;
 	public static CarJsonParser			jsonParser;
+	public static ArrayList<Traverse> 	traverseUnits;
 	
-	private ArrayList<Car> allCars;
-	private ArrayList<PlotInfo> carLatLongData;
+	private ArrayList<Car> 				allCars;
+	private ArrayList<PlotInfo> 		carLatLongData;
+	
 //	private PrintWriter writer;
 	
 	public static void main(String[] args) {
 		new BokunCentral();
+		String start = ConstructFreeways.S101.getRoadSegAt(6).getKey();
+		String end = ConstructFreeways.W10.getRoadSegAt(1).getKey();
+		
+		System.out.println("Start from " + start + "\nGo to " + end + "\n");
+		
+		BokunCentral.getFastestPath(start, end);
 	}
 	
 	public BokunCentral() {
@@ -35,6 +43,7 @@ public class BokunCentral {
 			jsonParser = new CarJsonParser();
 			jsonParser.start();
 			
+			traverseUnits = new ArrayList<Traverse>();
 			allCars = new ArrayList<Car>();
 			carLatLongData = new ArrayList<PlotInfo>();
 		}
@@ -42,10 +51,8 @@ public class BokunCentral {
 			System.err.println("System error: ");
 			e.printStackTrace();
 		}
-		while(jsonParser.getCars().size() == 0)
-		{
-			System.out.print("");
-		}
+		while(jsonParser.getCars().size() == 0) { System.out.print(""); }
+		
 		allCars = jsonParser.getCars();
 		carLatLongData = aggregateCarLatLong();
 		
@@ -54,12 +61,6 @@ public class BokunCentral {
 //			System.out.println(carLatLongData.get(i).getLatitude() + " " + carLatLongData.get(i).getLongitude()
 //					+ " " + carLatLongData.get(i).getSpeed() + " " + carLatLongData.get(i).getFwy());
 //		}
-		
-		try {
-			new Traverse(ConstructFreeways.E10.getRoadSegAt(5), new double[] {ConstructFreeways.N101.getRoadSegAt(9).getX(), ConstructFreeways.N101.getRoadSegAt(9).getY()});
-		}
-		catch(Exception e) { e.printStackTrace(); }
-		
 	}
 	
 	//	Get the fastest path from source to destination
@@ -67,6 +68,42 @@ public class BokunCentral {
 		//	Find the road segments corresponding to the start and end keys
 		RoadSegment start = ConstructFreeways.getRoadSegmentAtKey(startKey);
 		RoadSegment end = ConstructFreeways.getRoadSegmentAtKey(endKey);
+		
+		//	Send out the Traverse units
+		Traverse t = new Traverse(start, new double[] {end.getX(), end.getY()});
+		traverseUnits.add(t);
+		
+		try {
+			//	Check every second for new traverse units
+			while(true) {
+				int size = traverseUnits.size();
+				Thread.sleep(1000);
+				
+				//	If no updates after 1 seconds assume no more units will be added
+				if(size == traverseUnits.size()) {
+					//	Wait until all units are done
+					for(int i = 0; i < traverseUnits.size(); i++)
+						traverseUnits.get(i).join();
+					break;
+				}
+			}
+			
+			//	Parse through all the units
+			double leastTravelTime = traverseUnits.get(0).getTotalTravelTime();
+			Traverse finalTraverse = traverseUnits.get(0);
+			for(int i = 1; i < traverseUnits.size(); i++) {
+				Traverse temp = traverseUnits.get(i);
+				
+				if(leastTravelTime > temp.getTotalTravelTime()) {
+					leastTravelTime = temp.getTotalTravelTime();
+					finalTraverse = temp;
+				}
+			}
+			
+//			System.out.println(finalTraverse);
+			
+		}
+		catch (InterruptedException e) { e.printStackTrace(); }
 	}
 	
 	//	Update database

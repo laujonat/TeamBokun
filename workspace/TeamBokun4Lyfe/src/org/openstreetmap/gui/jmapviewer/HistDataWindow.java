@@ -97,7 +97,7 @@ public class HistDataWindow extends JFrame {
 		
 		//TABLE
 		String[] columnNames = { "Hours", "East 10", "West 10", "East 105", "West 105", "South 101", "North 101", "South 405", "North 405"};
-		Object[][] data = new Object[24][10];
+		Object[][] data = new Object[24][9]; // changed from 10 --> 9
 		for(int i = 0; i < 9; i++)
 		{
 			for(int j = 0; j < 24; j++)
@@ -152,50 +152,98 @@ public class HistDataWindow extends JFrame {
 		
 		//GRAPH
 		
+//		XYSeries east10 = new XYSeries("East 10");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			east10.add(i, E10Speeds[i]);
+//		}
+//		
+//		XYSeries west10 = new XYSeries("West 10");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			west10.add(i, W10Speeds[i]);
+//		}
+//		
+//		XYSeries east105 = new XYSeries("East 105");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			east105.add(i, E105Speeds[i]);
+//		}
+//		
+//		XYSeries west105 = new XYSeries("West 105");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			west105.add(i, W105Speeds[i]);
+//		}
+//		
+//		XYSeries south101 = new XYSeries("South 101");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			south101.add(i, S101Speeds[i]);
+//		}
+//		
+//		XYSeries north101 = new XYSeries("North 101");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			north101.add(i, N101Speeds[i]);
+//		}
+//		
+//		XYSeries south405 = new XYSeries("South 405");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			south405.add(i, S405Speeds[i]);
+//		}
+//		
+//		XYSeries north405 = new XYSeries("North 405");
+//		for(int i = firstFilled; i < (lastFilled + 1); i++)
+//		{
+//			north405.add(i, N405Speeds[i]);
+//		}
+		
 		XYSeries east10 = new XYSeries("East 10");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			east10.add(i, E10Speeds[i]);
 		}
 		
 		XYSeries west10 = new XYSeries("West 10");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			west10.add(i, W10Speeds[i]);
 		}
 		
 		XYSeries east105 = new XYSeries("East 105");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			east105.add(i, E105Speeds[i]);
 		}
 		
 		XYSeries west105 = new XYSeries("West 105");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			west105.add(i, W105Speeds[i]);
 		}
 		
 		XYSeries south101 = new XYSeries("South 101");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			south101.add(i, S101Speeds[i]);
 		}
 		
 		XYSeries north101 = new XYSeries("North 101");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			north101.add(i, N101Speeds[i]);
 		}
 		
 		XYSeries south405 = new XYSeries("South 405");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			south405.add(i, S405Speeds[i]);
 		}
 		
 		XYSeries north405 = new XYSeries("North 405");
-		for(int i = firstFilled; i < (lastFilled + 1); i++)
+		for(int i = 0; i < 24; i++)
 		{
 			north405.add(i, N405Speeds[i]);
 		}

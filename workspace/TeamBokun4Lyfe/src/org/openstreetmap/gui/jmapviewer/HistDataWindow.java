@@ -199,7 +199,7 @@ public class HistDataWindow extends JFrame {
 //		{
 //			north405.add(i, N405Speeds[i]);
 //		}
-		
+		//
 		XYSeries east10 = new XYSeries("East 10");
 		for(int i = 0; i < 24; i++)
 		{

@@ -8,7 +8,7 @@ import data.RoadSegment;
 
 public class Node 
 {
-
+//
 	private ArrayList<Freeway> edges;
 	private double latitude;
 	private double longitude;

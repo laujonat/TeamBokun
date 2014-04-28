@@ -31,6 +31,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -75,6 +76,50 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     private JLabel mperpLabelName=null;
     private JLabel mperpLabelValue = null;
     private JPanel helpPanel;
+    private JComboBox startHighwayList;
+    private JComboBox endHighwayList;
+    
+    String[] highway = { "", "405", "105", "101", "10" };
+    
+    String[] the405Ramps = { "Manchester Boulevard, La Cienega Boulevard, Florence Avenue", "La Tijera Boulevard", "Howard Hughes Parkway, Sepulveda Boulevard", 
+    		"Sepulveda Boulevard, Slauson Avenue (SR 90 east)", "Jefferson Boulevard", "SR 90 west (Marina Freeway)   Marina del Rey", "Culver Boulevard, Washington Boulevard   Culver City",
+    		"Venice Boulevard (SR 187), Washington Boulevard", "National Boulevard", "I-10 (Santa Monica Freeway)   Santa Monica, Los Angeles", "Olympic Boulevard, Pico Boulevard",
+    		"SR 2 (Santa Monica Boulevard)", "Wilshire Boulevard", "Montana Avenue", "Sunset Boulevard", "Moraga Drive", "Getty Center Drive",
+    		"Mulholland Drive, Skirball Center Drive", "Ventura Boulevard, Sepulveda Boulevard, Valley Vista Boulevard",
+    		"US 101 (Ventura Freeway)   Ventura, Los Angeles", "Burbank Boulevard", "Victory Boulevard   Van Nuys", "Sherman Way", "Roscoe Boulevard   Panorama City",
+    		"Nordhoff Street", "Devonshire Street   Granada Hills", "SR 118 (Ronald Reagan Freeway)   Simi Valley", "San Fernando Mission Boulevard   San Fernando",
+    		"Rinaldi Street   Mission Hills", "I-5 north (Golden State Freeway)   Sacramento", "I-105 (Century Freeway) El Segundo, Norwalk" };
+    
+    String[] the105Ramps = { "Imperial Highway west", "SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport", "Nash Street LAX Airport",
+    		"La Cienega Boulevard, Aviation Boulevard", "I-405 (San Diego Freeway) Santa Monica, Long Beach", "Hawthorne Boulevard", 
+    		"Prairie Avenue", "Crenshaw Boulevard", "Vermont Avenue", "I-110 (Harbor Freeway) Los Angeles, San Pedro", "Central Avenue", "Wilmington Avenue",
+    		"Long Beach Boulevard", "I-710 (Long Beach Freeway) Pasadena, Long Beach", "Garfield Avenue", "Paramount Boulevard",
+    		"SR 19 (Lakewood Boulevard)", "Bellflower Boulevard", "I-605 (San Gabriel River Freeway)", "Hoxie Avenue Norwalk Metro Station",
+    		"Studebaker Road" };
+   
+    String[] the101Ramps = { "I-5 south (Santa Ana Freeway) Santa Ana", "Euclid Avenue", "SR 60 east (Pomona Freeway) / Soto Street Pomona", 
+    		"Seventh Street", "Fourth Street", "First Street", "Cesar Chavez Avenue", "I-10 east (San Bernardino Freeway) San Bernardino", 
+    		"Mission Road", "Vignes Street", "Alameda Street Union Station", "Los Angeles Street", "Spring Street", "Broadway", "Grand Avenue, Temple Street", 
+    		"SR 110 north (Pasadena Freeway) / I-110 south (Harbor Freeway) Pasadena, San Pedro", "Glendale Boulevard, Echo Park Avenue, Union Avenue, Belmont Avenue", 
+    		"SR 2 east (Alvarado Street)", "Rampart Boulevard, Benton Way", "Silver Lake Boulevard", "Vermont Avenue", "Melrose Avenue, Normandie Avenue", 
+    		"SR 2 west (Santa Monica Boulevard) / Western Avenue", "Sunset Boulevard", "Hollywood Boulevard", "Gower Street", "Vine Street", 
+    		"Cahuenga Boulevard Hollywood Bowl", "Highland Avenue (SR 170 south) Hollywood Bowl", "Barham Boulevard Burbank", "Universal Studios Boulevard", 
+    		"Lankershim Boulevard Universal City", "Ventura Boulevard", "Vineland Avenue", "SR 134 east (Ventura Freeway) Pasadena", 
+    		"SR 170 north (Hollywood Freeway) Sacramento", "Tujunga Avenue", "Laurel Canyon Boulevard Studio City", "Coldwater Canyon Avenue", 
+    		"Woodman Avenue", "Van Nuys Boulevard", "Sepulveda Boulevard", "I-405 (San Diego Freeway) Santa Monica, Sacramento", 
+    		"Haskell Avenue", "Hayvenhurst Avenue", "Balboa Boulevard Encino", "White Oak Avenue", "Reseda Boulevard", "Tampa Avenue", "Winnetka Avenue Woodland Hills", 
+    		"De Soto Avenue, Serrania Avenue", "Canoga Avenue", "SR 27 (Topanga Canyon Boulevard) / Ventura Boulevard", "Shoup Avenue",
+    		"Fallbrook Avenue", "Woodlake Avenue", "Mulholland Drive, Valley Circle Boulevard" };
+    
+    String[] the10Ramps = { "SR 1 north (Pacific Coast Highway) Oxnard", "4th Street, 5th Street", "SR 1 south (Lincoln Boulevard) to SR 2 east",
+    		"20th Street", "Cloverfield Boulevard", "Centinela Avenue", "Bundy Drive", "I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach", 
+    		"National Boulevard, Overland Avenue", "National Boulevard", "Robertson Boulevard Culver City", "La Cienega Boulevard, Venice Boulevard (SR 187 west)",
+    		"Fairfax Avenue, Washington Boulevard", "La Brea Avenue", "Crenshaw Boulevard", "Arlington Avenue", "Western Avenue, Normandie Avenue",
+    		"Hoover Street, Vermont Avenue", "Hoover Street", "I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles",
+    		"Grand Avenue", "Los Angeles Street Convention Center", "Maple Avenue", "San Pedro Street", "Central Avenue", "Alameda Street", 
+    		"Mateo Street, Santa Fe Avenue", "I-5 south (Santa Ana Freeway) / SR 60 east (Pomona Freeway) Santa Ana, Pomona",
+    		"Boyle Avenue", "Fourth Street", "Cesar Chavez Avenue", "I-5 north (Golden State Freeway) Sacramento", "US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood", 
+    		"State Street", "Soto Street", "City Terrace Drive", "Eastern Avenue"};
     
     private BokunCentral carData;
     private ArrayList<PlotInfo> plotInfo;
@@ -94,6 +139,9 @@ public class Demo extends JFrame implements JMapViewerEventListener {
     MapMarkerCircle end;
     MapMarkerCircle start;
     DirectionsJsonParser directions = new DirectionsJsonParser();
+    //RoadSegment road;
+    ConstructFreeways coordPoints = new ConstructFreeways();
+    double x1, x2, y1, y2;
 
     /**
      * Constructs the {@code Demo}.
@@ -256,18 +304,18 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         
         JLabel startLabel = new JLabel("Starting Point:"); 
         JLabel destinationLabel = new JLabel("Destination:"); 
-        final JTextField startingPointTextField = new JTextField(); 
-        startingPointTextField.setColumns(30);
-        
-        final JTextField destinationTextField = new JTextField(); 
-        destinationTextField.setColumns(30); 
-        startingPointTextField.addActionListener(new ActionListener() { 
-        	public void actionPerformed(ActionEvent e) { 
-        		startStr = startingPointTextField.getText();
-        		System.out.println(startStr); 
-        		destinationTextField.requestFocus();
-        		} 
-        	});
+//        final JTextField startingPointTextField = new JTextField(); 
+//        startingPointTextField.setColumns(30);
+//        
+//        final JTextField destinationTextField = new JTextField(); 
+//        destinationTextField.setColumns(30); 
+//        startingPointTextField.addActionListener(new ActionListener() { 
+//        	public void actionPerformed(ActionEvent e) { 
+//        		startStr = startingPointTextField.getText();
+//        		System.out.println(startStr); 
+//        		destinationTextField.requestFocus();
+//        		} 
+//        	});
 //        JTextField startingPointTextField = new JTextField();
 //        startingPointTextField.setText("Starting Point: ");
 //        startingPointTextField.setColumns(30);
@@ -290,41 +338,156 @@ public class Demo extends JFrame implements JMapViewerEventListener {
 //            }
 //        }); 
     	
-    	destinationTextField.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) { 
-    			endStr = destinationTextField.getText(); 
-    			System.out.println(endStr);
-    			directions.requestDirections(startStr, endStr); 
-    			//text area 
-    			tempDistance = directions.getDistance(); 
-    			tempStartCoord = directions.getOriginCoord(); 
-    			tempEndCoord = directions.getDestCoord();
-    			System.out.println("start coord: " + tempStartCoord[0] + ", " + tempStartCoord[1]); 
-    			System.out.println("end coord: " + tempEndCoord[0] + ", " + tempEndCoord[1]); 
-    			tempCurrentSpeed = directions.gettimeToDestAtCurrTraffic();
-    			tempSpeedLimit = directions.timeToDestAtSpeedLimit(); 
-    			System.out.println("time at current speed: " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes");
-    			System.out.println("time at speed limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes");
-    			jta.setText("\n Distance: " + tempDistance + " miles \n" + "\n" + " Time at Highway Speed Limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes \n" + "\n" + " Time at Current Speed (of traffic): " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes \n" + "\n"); 
-    			//Destination 
-    			Layer bokun = treeMap.addLayer("bokun");
-    			end = new MapMarkerCircle(bokun, "Destination", new Coordinate(tempEndCoord[0], tempEndCoord[1]), .005);
-    			end.setBackColor(Color.RED); 
-    			end.setColor(Color.RED); 
-    			//Starting Point 
-    			start = new MapMarkerCircle(bokun, "Starting Point", new Coordinate(tempStartCoord[0], tempStartCoord[1]), .005); 
-    			start.setBackColor(Color.RED); 
-    			start.setColor(Color.RED); 
-    			map().addMapMarker(end); 
-    			map().addMapMarker(start); 
-    			jta.setVisible(true); 
-    			helpPanel.setVisible(false);
-    			} 
-    		});
+//    	destinationTextField.addActionListener(new ActionListener() {
+//    		public void actionPerformed(ActionEvent e) { 
+//    			endStr = destinationTextField.getText(); 
+//    			System.out.println(endStr);
+//    			directions.requestDirections(startStr, endStr); 
+//    			//text area 
+//    			tempDistance = directions.getDistance(); 
+//    			tempStartCoord = directions.getOriginCoord(); 
+//    			tempEndCoord = directions.getDestCoord();
+//    			System.out.println("start coord: " + tempStartCoord[0] + ", " + tempStartCoord[1]); 
+//    			System.out.println("end coord: " + tempEndCoord[0] + ", " + tempEndCoord[1]); 
+//    			tempCurrentSpeed = directions.gettimeToDestAtCurrTraffic();
+//    			tempSpeedLimit = directions.timeToDestAtSpeedLimit(); 
+//    			System.out.println("time at current speed: " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes");
+//    			System.out.println("time at speed limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes");
+//    			jta.setText("\n Distance: " + tempDistance + " miles \n" + "\n" + " Time at Highway Speed Limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes \n" + "\n" + " Time at Current Speed (of traffic): " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes \n" + "\n"); 
+//    			//Destination 
+//    			Layer bokun = treeMap.addLayer("bokun");
+//    			end = new MapMarkerCircle(bokun, "Destination", new Coordinate(tempEndCoord[0], tempEndCoord[1]), .005);
+//    			end.setBackColor(Color.RED); 
+//    			end.setColor(Color.RED); 
+//    			//Starting Point 
+//    			start = new MapMarkerCircle(bokun, "Starting Point", new Coordinate(tempStartCoord[0], tempStartCoord[1]), .005); 
+//    			start.setBackColor(Color.RED); 
+//    			start.setColor(Color.RED); 
+//    			map().addMapMarker(end); 
+//    			map().addMapMarker(start); 
+//    			jta.setVisible(true); 
+//    			helpPanel.setVisible(false);
+//    			} 
+//    		});
+    	
+    	startHighwayList = new JComboBox(highway);
+    	
+    	startHighwayList.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                    	startHighwayList = (JComboBox) e.getSource();
+                        if ((String)startHighwayList.getSelectedItem() == "405") {
+                        	startStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the405Ramps, the405Ramps[0]);
+                        	endHighwayList.requestFocus();
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "105") {
+                        	startStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the105Ramps, the105Ramps[0]);       
+                        	endHighwayList.requestFocus();
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "101") {
+                        	startStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the101Ramps, the101Ramps[0]); 
+                        	endHighwayList.requestFocus();
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "10") {
+                        	startStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the10Ramps, the10Ramps[0]);     
+                        	endHighwayList.requestFocus();
+                        }
+                    }
+                }            
+        );
+    	
+    	endHighwayList = new JComboBox(highway);
+    	//highwayList.setSelectedIndex(4);
+    	
+    	endHighwayList.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                    	startHighwayList = (JComboBox) e.getSource();
+                        if ((String)startHighwayList.getSelectedItem() == "405") {
+                        	endStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the405Ramps, the405Ramps[0]);
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "105") {
+                        	endStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the105Ramps, the105Ramps[0]);       	
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "101") {
+                        	endStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the101Ramps, the101Ramps[0]);       	
+                        }
+                        else if ((String)startHighwayList.getSelectedItem() == "10") {
+                        	endStr = (String) JOptionPane.showInputDialog(null, "Choose an on/off ramp",
+                        			"On/Off Ramps", JOptionPane.QUESTION_MESSAGE, null, 
+                        			the10Ramps, the10Ramps[0]);       	
+                        }
+                        
+                        directions.requestDirections(startStr, endStr);
+                    	
+                    	//text area
+                    	tempDistance = directions.getDistance();
+                    	
+                    	tempStartCoord = directions.getOriginCoord();
+                    	tempEndCoord = directions.getDestCoord();
+//                    	System.out.println("start coord: " + tempStartCoord[0] + ", " + tempStartCoord[1]);
+//                    	System.out.println("end coord: " + tempEndCoord[0] + ", " + tempEndCoord[1]);
+                    	
+                    	x1 = coordPoints.getLatitudeAtKey(startStr);
+                    	y1 = coordPoints.getLongitudeAtKey(startStr);
+                    	x2 = coordPoints.getLatitudeAtKey(endStr);
+                    	y2 = coordPoints.getLongitudeAtKey(endStr);
+                    	
+                    	System.out.println("start coord: " + x1 + ", " + y1);
+                    	System.out.println("start coord: " + x2 + ", " + y2);
+                    	
+                    	tempCurrentSpeed = directions.gettimeToDestAtCurrTraffic();
+                        tempSpeedLimit = directions.timeToDestAtSpeedLimit();
+                        System.out.println("time at current speed: " + tempCurrentSpeed[1] + " hours and " + tempCurrentSpeed[0] + " minutes");
+                        System.out.println("time at speed limit: " + tempSpeedLimit[1] + " hours and " + tempSpeedLimit[0] + " minutes");
+                    	
+                    	jta.setText("\n  Distance:      " + tempDistance + " miles \n" + "\n" + "  Time at Highway Speed Limit:      " + tempSpeedLimit[1] + " hours and " 
+                    	+ tempSpeedLimit[0] + " minutes \n" + "\n" +  "  Time at Current Speed (of traffic):      " + tempCurrentSpeed[1] + 
+                    	" hours and " + tempCurrentSpeed[0] + " minutes \n" + "\n");
+
+                        //Destination
+                        Layer bokun = treeMap.addLayer("bokun");
+//                        end = new MapMarkerCircle(bokun, "Destination", new Coordinate(tempEndCoord[0], tempEndCoord[1]), .005);
+                        end = new MapMarkerCircle(bokun, "Destination", new Coordinate(x2, y2), .005);
+                        end.setBackColor(Color.RED);
+                        end.setColor(Color.RED);
+                       
+                        //Starting Point
+                        //start = new MapMarkerCircle(bokun, "Starting Point", new Coordinate(tempStartCoord[0], tempStartCoord[1]), .005);
+                        start = new MapMarkerCircle(bokun, "Starting Point", new Coordinate(x1, y1), .005);
+                        start.setBackColor(Color.RED);
+                        start.setColor(Color.RED);
+                        map().addMapMarker(end);
+                        map().addMapMarker(start);
+                
+
+                    	jta.setVisible(true);
+                    	helpPanel.setVisible(false);
+                    }
+                }            
+        );
+    	
+    	
     	panelBottom.add(startLabel); 
-    	panelBottom.add(startingPointTextField); 
+    	//panelBottom.add(startingPointTextField); 
+    	panelBottom.add(startHighwayList);
     	panelBottom.add(destinationLabel);
-    	panelBottom.add(destinationTextField); 
+    	//panelBottom.add(destinationTextField); 
+    	panelBottom.add(endHighwayList);
     	panelBottom.add(focusButton); 
     	panelBottom.add(resetButton); 
     	panel.add(panelBottom, BorderLayout.NORTH);
@@ -384,8 +547,8 @@ public class Demo extends JFrame implements JMapViewerEventListener {
         resetButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		jta.setVisible(false); 
-        		startingPointTextField.setText("");
-        		destinationTextField.setText("");
+//        		startingPointTextField.setText("");
+//        		destinationTextField.setText("");
         		end.setVisible(false); 
         		start.setVisible(false); 
         		} 

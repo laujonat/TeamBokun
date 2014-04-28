@@ -39,6 +39,8 @@ public class ConstructFreeways {
 		constructW10();
 		constructE105();
 		constructW105();
+		E10.addNodes(LittleTokyo);
+		E10.addNodes(SantaMonica);
 	}
 	
 	public static void generateNodes()
@@ -235,8 +237,8 @@ public class ConstructFreeways {
 				e.printStackTrace();
 			}
 		}
-		E10.addNodes(LittleTokyo);
-		E10.addNodes(SantaMonica);
+//		E10.addNodes(LittleTokyo);
+//		E10.addNodes(SantaMonica);
 	}
 	
 	public static void constructW10()

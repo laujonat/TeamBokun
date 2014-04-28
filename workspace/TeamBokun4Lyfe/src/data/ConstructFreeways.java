@@ -128,8 +128,7 @@ public class ConstructFreeways {
 		for(int i = (N101.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = N101.getRoadSegAt(i);
-			RoadSegment copy = new RoadSegment(rs);
-			copy.setFreeway(S101);
+			RoadSegment copy = new RoadSegment(rs, S101);
 			copy.setID(id++);
 			S101.addRoadSeg(copy);
 		}	
@@ -140,6 +139,7 @@ public class ConstructFreeways {
 		N405.addNodes(LAX);
 		N405.addNodes(SantaMonica);
 		N405.addNodes(MulhollandDrive);
+		System.out.println("N405 Nodes:\n")
 		try 
 		{
 			RoadSegment temp;
@@ -151,6 +151,9 @@ public class ConstructFreeways {
 				tempKey = split[0];
 				temp = new RoadSegment(tempKey, id++, N405);
 				N405.addRoadSeg(temp);
+				
+				if(temp.isA_Node())
+					System.out.println("I'm a node!");
 				
 				//	Get coordinates
 				String[] coords = split[1].split(",");
@@ -185,8 +188,7 @@ public class ConstructFreeways {
 		for(int i = (N405.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = N405.getRoadSegAt(i);
-			RoadSegment copy = new RoadSegment(rs);
-			copy.setFreeway(S405);
+			RoadSegment copy = new RoadSegment(rs, S405);
 			copy.setID(id++);
 			S405.addRoadSeg(copy);
 		}
@@ -240,8 +242,7 @@ public class ConstructFreeways {
 		for(int i = (E10.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = E10.getRoadSegAt(i);
-			RoadSegment copy = new RoadSegment(rs);
-			copy.setFreeway(W10);
+			RoadSegment copy = new RoadSegment(rs, W10);
 			copy.setID(id++);
 			W10.addRoadSeg(copy);
 		}
@@ -293,8 +294,7 @@ public class ConstructFreeways {
 		for(int i = (E105.getNumRoadSeg() - 1); i >= 0; i--)
 		{
 			RoadSegment rs = E105.getRoadSegAt(i);
-			RoadSegment copy = new RoadSegment(rs);
-			copy.setFreeway(W105);
+			RoadSegment copy = new RoadSegment(rs, W105);
 			copy.setID(id++);
 			W105.addRoadSeg(copy);
 		}
